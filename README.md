@@ -1,0 +1,2 @@
+# tradingram
+our project
