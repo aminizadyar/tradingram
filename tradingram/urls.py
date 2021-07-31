@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from paper_trade.urls import urlpatterns as paper_trade_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+] + paper_trade_urlpatterns
