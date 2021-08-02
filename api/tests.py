@@ -1,4 +1,4 @@
-from binance.client import Client
+from cryptocurrency.client import Client
 from django.test import TestCase
 
 

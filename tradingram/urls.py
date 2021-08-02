@@ -18,7 +18,11 @@ from django.urls import path
 
 from paper_trade.urls import urlpatterns as paper_trade_urlpatterns
 from landing_page.urls import urlpatterns as landing_page_urlpatterns
+from api.urls import urlpatterns as api_urlpatterns
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-] + paper_trade_urlpatterns + landing_page_urlpatterns
+] + paper_trade_urlpatterns + landing_page_urlpatterns + api_urlpatterns

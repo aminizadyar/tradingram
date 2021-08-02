@@ -19,6 +19,56 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../../static/landing_page/css/styles.css" rel="stylesheet" />
       	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+
+         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+
+        <style>
+
+      form {
+      border: 5px solid #f1f1f1;
+      }
+      input[type=text], input[type=password] {
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      .icon1 {
+      font-size: 110px;
+      display: flex;
+      justify-content: center;
+      color: #4286f4;
+      }
+      .buttonclass {
+      background-color: #4286f4;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grab;
+      width: 48%;
+      }
+
+      .formcontainer1 {
+      text-align: center;
+      margin: 24px 50px 12px;
+      }
+      .container1 {
+      padding: 16px 0;
+      text-align:left;
+      }
+
+    </style>
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -45,7 +95,7 @@
                         <hr class="divider" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                      
+
                         <p class="text-white-75 mb-5">Safe, Entertaining, Profitable trading experience</p>
                         <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
                     </div>
@@ -111,7 +161,7 @@
                             <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/1.jpg" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-name">Create trading strategies</div>
-                              
+
                             </div>
                         </a>
                     </div>
@@ -119,9 +169,9 @@
                         <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/2.jpg" >
                             <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/2.jpg" alt="..." />
                             <div class="portfolio-box-caption">
-                              
+
                               <div class="project-name">Backtest your strategies</div>
-                              
+
                             </div>
                         </a>
                     </div>
@@ -129,9 +179,9 @@
                         <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/3.jpg" >
                             <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/3.jpg" alt="..." />
                             <div class="portfolio-box-caption">
-                               
+
                               <div class="project-name">Deploy your strategies</div>
-                              
+
                             </div>
                         </a>
                     </div>
@@ -139,9 +189,9 @@
                         <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/4.jpg" >
                             <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/4.jpg" alt="..." />
                             <div class="portfolio-box-caption">
-                                
+
                               <div class="project-name">Social media feed</div>
-                              
+
                             </div>
                         </a>
                     </div>
@@ -183,6 +233,23 @@
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
+                        <form action="#">
+
+                            <div class="icon1">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                              <div class="formcontainer1">
+                              <div class="container1">
+                                <label for="uname"><strong>Username</strong></label>
+                                <input type="text" placeholder="Enter Username" name="uname" required>
+                                <label for="mail"><strong>E-mail</strong></label>
+                                <input type="text" placeholder="Enter E-mail" name="mail" required>
+                                <label for="psw"><strong>Password</strong></label>
+                                <input type="password" placeholder="Enter Password" name="psw" required>
+                              </div>
+                              <button class="buttonclass" type="submit"><strong>SIGN UP</strong></button>
+
+                        </form>
                         <!-- * * * * * * * * * * * * * * *-->
                         <!-- * * SB Forms Contact Form * *-->
                         <!-- * * * * * * * * * * * * * * *-->
@@ -190,47 +257,7 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Full name</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">Email address</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phone">Phone number</label>
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                            <!-- Message input-->
-                            
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    
-                                 
-                                </div>
-                            </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Submit</button></div>
-                        </form>
+
                     </div>
                 </div>
               <!--

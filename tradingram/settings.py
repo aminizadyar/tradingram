@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'paper_trade',
-    'landing_page'
+    'landing_page',
+    'api'
 ]
 
 MIDDLEWARE = [
