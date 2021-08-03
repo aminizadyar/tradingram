@@ -246,19 +246,19 @@
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                     <div class="col-lg-6">
-                        <form action="/">
-
+                        <form action="" method="post">
+                            {% csrf_token %}
                             <div class="icon1">
                                 <i class="fas fa-user-circle"></i>
                             </div>
                               <div class="formcontainer1">
                               <div class="container1">
-                                <label for="uname"><strong>Username</strong></label>
-                                <input type="text" placeholder="Enter Username" name="uname" required>
-                                <label for="mail"><strong>E-mail</strong></label>
-                                <input type="text" placeholder="Enter E-mail" name="mail" required>
-                                <label for="psw"><strong>Password</strong></label>
-                                <input type="password" placeholder="Enter Password" name="psw" required>
+                                <label for="username"><strong>Username</strong></label>
+                                {{ form.username }}
+                                <label for="email"><strong>E-mail</strong></label>
+                                <input type="text" placeholder="Enter E-mail" name="email" required>
+                                <label for="password"><strong>Password</strong></label>
+                                <input type="password" placeholder="Enter Password" name="password" required>
                               </div>
                               <button class="buttonclass" type="submit"><strong>SIGN UP</strong></button>
 

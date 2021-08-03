@@ -13,9 +13,14 @@ def landing_page(request):
             obj.email = form.cleaned_data['email']
             obj.password = form.cleaned_data['password']
             obj.save()
-            return HttpResponseRedirect('/stocks-last-price')
+            return HttpResponseRedirect('/registration-completed')
     else:
         form = RegistrationForm()
 
 
     return render(request, 'landing_page/index.html', {'form': form})
+
+
+def registration_completed(request):
+
+    return render(request, 'landing_page/registration-completed.html')
