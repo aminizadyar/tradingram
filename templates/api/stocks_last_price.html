@@ -11,13 +11,11 @@
       <a class="nav-link active" aria-current="page" href="#">Stock's Live Price</a>
     </nav>
     <ul class="list-group">
+    {% for symbol in qs %}
+        <li class="list-group-item"><span class="badge bg-secondary">{{ symbol.ticker }}</span>     <span class="badge bg-success">Live Price</span>      <span class="badge bg-info text-dark">{{ symbol.last_price }}</span></li>
+    {% endfor %}
 
 
-    {% for key, value in data.items %}
-
-        <li class="list-group-item"><span class="badge bg-secondary">{{key}}</span>     <span class="badge bg-success">Live Price</span>      <span class="badge bg-info text-dark">{{value}}</span></li>
-
-     {% endfor %}
 
     </ul>
 </body>
