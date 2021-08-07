@@ -1,13 +1,6 @@
 import yfinance as yf
 from api.models import Stock
 
-stocks=['MSFT', 'AAPL' ,'GOOG','AMZN','FB','TSLA','BRK-A',
-            'TSM','TCEHY','BABA','V','NVDA','005930.KS',
-            'JPM','JNJ','LVMUY','WMT','UNH','MA','NSRGY','HD','PG',
-            'RHHBY','BAC','PYPL','DIS','ASML','ADBE','CMCSA',
-            'NKE','OR.PA','TM','KO','XOM','ORCL','PFE','CRM','LLY',
-             'CSCO','VZ','NFLX','INTC','PEP','ABT','DHR']
-
 
 def get_stocks_last_price():
     stocks = list(Stock.objects.all().values_list('ticker', flat=True))
@@ -17,3 +10,4 @@ def get_stocks_last_price():
         obj.last_price=round(tickers.tickers[symbol].history(period="1m").iloc[0]['Close'],2)
         obj.save()
     return
+
