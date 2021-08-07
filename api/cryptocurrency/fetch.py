@@ -1,21 +1,16 @@
 from pycoingecko import CoinGeckoAPI
+from api.models import CryptoCurrency
 coin_gecko = CoinGeckoAPI()
-
-def get_cryptocurrencies_last_price2():
-    coin_gecko = CoinGeckoAPI()
-    cryptocurrencies=['bitcoin', 'litecoin', 'ethereum','cardano','bitcoin-cash',
-                              'ripple','iota','eos','dash','monero','neo','omisego',
-                              'digibyte','dogecoin','steem','ravencoin','polkadot',
-                              'chainlink','stellar','binancecoin','uniswap','solana',
-                              'ethereum-classic','tron','tezos','nem','zcash']
-
-    cryptocurrencies_last_price=coin_gecko.get_price(ids=cryptocurrencies, vs_currencies='usd')
-    return cryptocurrencies_last_price
 
 
 def get_cryptocurrencies_last_price():
-    coin_gecko = CoinGeckoAPI()
 
+    cryptocurrencies=list(CryptoCurrency.objects.all().values_list('name', flat=True))
     cryptocurrencies_last_price = coin_gecko.get_price(ids=cryptocurrencies, vs_currencies='usd')
-    return cryptocurrencies_last_price
+    for cryptocurrency in cryptocurrencies_last_price :
+        obj=CryptoCurrency.objects.get(name=cryptocurrency)
+        obj.last_price=round(cryptocurrencies_last_price[cryptocurrency]['usd'],4)
+        obj.save()
+    return
+
 

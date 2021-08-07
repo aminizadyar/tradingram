@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'paper_trade',
     'landing_page',
-    'api',
-    'django_crontab'
+    'api'
 ]
 
 MIDDLEWARE = [

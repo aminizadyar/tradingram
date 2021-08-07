@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stocks Last Prices</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+    <nav class="nav nav-pills nav-fill">
+      <a class="nav-link active" aria-current="page" href="#">Forex Live Data</a>
+    </nav>
+    <ul class="list-group">
+    {% for pair in qs %}
+        <li class="list-group-item"><span class="badge bg-secondary">{{ pair.ticker }}</span>     <span class="badge bg-success">Bid</span>      <span class="badge bg-info text-dark">{{ pair.bid }}</span>
+
+        <span class="badge bg-success">Ask</span>      <span class="badge bg-info text-dark">{{ pair.ask }}</span>
+
+        </li>
+    {% endfor %}
+
+
+
+    </ul>
+</body>
+</html>

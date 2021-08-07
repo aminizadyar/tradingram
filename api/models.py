@@ -4,6 +4,11 @@ class Stock(models.Model):
     ticker = models.CharField(max_length=30,unique=True)
     last_price = models.FloatField(default=0)
 
-class CryptoCurrencies(models.Model):
-    ticker = models.CharField(max_length=30,unique=True)
+class CryptoCurrency(models.Model):
+    name = models.CharField(max_length=30,unique=True)
     last_price = models.FloatField(default=0)
+
+class ForexPair(models.Model):
+    ticker = models.CharField(max_length=30,unique=True)
+    bid = models.FloatField(default=0)
+    ask = models.FloatField(default=0)
