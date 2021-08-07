@@ -17,3 +17,9 @@ class FuturesContract(models.Model):
     name = models.CharField(max_length=30,unique=True)
     ticker = models.CharField(max_length=30, unique=True)
     last_price = models.FloatField(default=0)
+
+
+class Index(models.Model):
+    name = models.CharField(max_length=30,unique=True)
+    ticker = models.CharField(max_length=30, unique=True)
+    last_price = models.FloatField(default=0)

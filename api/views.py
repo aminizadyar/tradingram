@@ -3,6 +3,7 @@ from .models import Stock
 from .models import CryptoCurrency
 from .models import ForexPair
 from .models import FuturesContract
+from .models import Index
 
 
 def stocks_last_price(request):
@@ -12,7 +13,6 @@ def stocks_last_price(request):
     return render(request, 'api/stocks_last_price.html', context)
 
 def cryptocurrencies_last_price(request):
-
     qs = CryptoCurrency.objects.all();
     context = {'qs': qs}
     return render(request, 'api/cryptocurrencies_last_price.html', context)
@@ -28,3 +28,9 @@ def futures_last_price(request):
     qs = FuturesContract.objects.all();
     context = {'qs': qs}
     return render(request, 'api/futures_last_price.html', context)
+
+def index_last_data(request):
+
+    qs = Index.objects.all();
+    context = {'qs': qs}
+    return render(request, 'api/index_last_data.html', context)
