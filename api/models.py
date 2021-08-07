@@ -12,3 +12,8 @@ class ForexPair(models.Model):
     ticker = models.CharField(max_length=30,unique=True)
     bid = models.FloatField(default=0)
     ask = models.FloatField(default=0)
+
+class FuturesContract(models.Model):
+    name = models.CharField(max_length=30,unique=True)
+    ticker = models.CharField(max_length=30, unique=True)
+    last_price = models.FloatField(default=0)
