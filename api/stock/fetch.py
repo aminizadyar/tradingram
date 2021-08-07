@@ -7,7 +7,7 @@ def get_stocks_last_price():
     tickers = yf.Tickers(stocks)
     for symbol in stocks:
         obj=Stock.objects.get(ticker=symbol)
-        obj.last_price=round(tickers.tickers[symbol].history(period="1m").iloc[0]['Close'],2)
+        obj.last_price=round(tickers.tickers[symbol].history(period="1m").iloc[0]['Close'],4)
         obj.save()
     return
 
