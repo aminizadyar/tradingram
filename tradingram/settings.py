@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'paper_trade',
     'landing_page',
-    'api'
+    'api',
+    'django_q'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,12 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+Q_CLUSTER = {
+    "name": "tradingram",
+    "ack_failures": True,
+    "max_attempts" : 1,
+    'timeout':30,
+    'retry': 60,
+    "orm": "default",
+}
