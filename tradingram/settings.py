@@ -130,7 +130,7 @@ Q_CLUSTER = {
     "name": "tradingram",
     "ack_failures": True,
     "max_attempts" : 1,
-    'timeout':30,
-    'retry': 60,
+    'timeout':40,
+    'retry': 120,
     "orm": "default",
 }
