@@ -1,22 +1,22 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from .forms import RegistrationForm
-from .models import User
+from .forms import SignUpForm
+from django.contrib.auth import login, authenticate
+from django.shortcuts import redirect
+
 
 def landing_page(request):
 
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            obj = User()
-            obj.username = form.cleaned_data['username']
-            obj.email = form.cleaned_data['email']
-            obj.password = form.cleaned_data['password']
-            obj.save()
-            return HttpResponseRedirect('/registration-completed')
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('cryptocurrencies_last_price')
     else:
-        form = RegistrationForm()
-
+        form = SignUpForm()
 
     return render(request, 'landing_page/index.html', {'form': form})
 
