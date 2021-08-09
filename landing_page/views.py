@@ -5,7 +5,6 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import redirect
 
 
-
 def landing_page(request):
 
     if request.method == 'POST':

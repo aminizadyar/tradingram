@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'paper_trade',
     'landing_page',
     'api',
-    'django_q'
+    'django_q',
+    'social_media'
 ]
 
 MIDDLEWARE = [
