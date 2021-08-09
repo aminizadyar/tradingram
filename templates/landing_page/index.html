@@ -80,7 +80,7 @@
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#services">Features</a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Product</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Sign In</a></li>
                     </ul>
                 </div>
             </div>
@@ -225,9 +225,9 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Let's Register Now!</h2>
+                        <h2 class="mt-0">Let's Sign In Now!</h2>
                         <hr class="divider" />
-                        <p class="text-muted mb-5">Submit this form now and become one of the founding members of Tradingram.</p>
+                        <p class="text-muted mb-5">Sign In to your account and have a rich trading experience</p>
                     </div>
                 </div>
                 <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
@@ -239,20 +239,28 @@
                             </div>
                               <div class="formcontainer1">
                               <div class="container1">
-                                 {% for field in form %}
-                                      <p>
-                                        {{ field.label_tag }}<br>
-                                        {{ field }}
-                                        {% if field.help_text %}
-                                          <small style="color: grey">{{ field.help_text }}</small>
-                                        {% endif %}
-                                        {% for error in field.errors %}
+                                <p>
+                                        {{ form.username.label_tag }}<br>
+                                        {{ form.username }}
+
+                                        {% for error in form.username.errors %}
                                           <p style="color: red">{{ error }}</p>
                                         {% endfor %}
-                                      </p>
-                                 {% endfor %}
+                                </p>
+
+                              <p>
+                                        {{ form.password.label_tag }}<br>
+                                        {{ form.password }}
+
+                                        {% for error in form.password.errors %}
+                                          <p style="color: red">{{ error }}</p>
+                                        {% endfor %}
+                              </p>
+
+                                  <p style="color:red;">{{ state }}</p>
+
                               </div>
-                              <button class="buttonclass" type="submit"><strong>SIGN UP</strong></button>
+                              <button class="buttonclass" type="submit"><strong>SIGN IN</strong></button>
 
                         </form>
                         <!-- * * * * * * * * * * * * * * *-->
