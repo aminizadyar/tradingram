@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from .forms import SignUpForm
 from .forms import SignInForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import redirect
-from django.forms import ValidationError
+
 
 
 def landing_page(request):
@@ -28,6 +29,16 @@ def landing_page(request):
     return render(request, 'landing_page/index.html', {'form': form,'state':state})
 
 
-def registration_completed(request):
-
-    return render(request, 'landing_page/registration-completed.html')
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('cryptocurrencies_last_price')
+    else:
+        form = SignUpForm()
+    return render(request, 'landing_page/signup.html',{'form':form})
