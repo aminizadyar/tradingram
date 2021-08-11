@@ -1,7 +1,7 @@
 from django.urls import path
 
-from paper_trade.views import ticker_page
+from paper_trade.views import symbol_page
 
 urlpatterns = [
-    path('tickers/<slug:ticker>/', ticker_page, name='ticker'),
+    path('tickers/<slug:symbol>/', symbol_page, name='symbol_page'),
 ]

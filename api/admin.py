@@ -4,7 +4,7 @@ from api.models import CryptoCurrency
 from api.models import ForexPair
 from api.models import FuturesContract
 from api.models import Index
-from api.models import Ticker
+from api.models import Symbol
 
 
 admin.site.register(Stock)
@@ -12,4 +12,4 @@ admin.site.register(CryptoCurrency)
 admin.site.register(ForexPair)
 admin.site.register(FuturesContract)
 admin.site.register(Index)
-admin.site.register(Ticker)
+admin.site.register(Symbol)

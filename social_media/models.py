@@ -11,6 +11,9 @@ class Profile(models.Model):
     profile_picture = models.ImageField(null=True,blank=True)
     cash = models.FloatField(default=100000)
 
+    def __str__(self):
+        return self.user.username
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
