@@ -31,4 +31,4 @@ class Order(models.Model):
     result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')
 
     def __str__(self):
-        return self.user.username + " -- " + self.symbol.symbol +  " -- " +str(self.created_datetime) +"--" + self.get_result_display() +" Order"
+        return self.user.username + " -- " + self.symbol.symbol +  " -- " +str(self.created_datetime) +"--" + self.get_result_display()+ "--" +self.get_direction_display() +"  Order"
