@@ -26,7 +26,7 @@ def simple_sell(order,user,symbol):
             state = "you don't have this ticker in your portfolio"
 
     else:
-        state = "your input price is lower than the market price"
+        state = "your input price is higher than the market price"
 
     return state
 
