@@ -9,6 +9,7 @@ class CryptoCurrency(models.Model):
     last_price = models.FloatField(default=0)
 
 class ForexPair(models.Model):
+
     ticker = models.CharField(max_length=30,unique=True)
     bid = models.FloatField(default=0)
     ask = models.FloatField(default=0)
@@ -20,6 +21,13 @@ class FuturesContract(models.Model):
 
 
 class Index(models.Model):
+    name = models.CharField(max_length=30,unique=True)
+    ticker = models.CharField(max_length=30, unique=True)
+    last_price = models.FloatField(default=0)
+
+
+class Ticker(models.Model):
+    ticker_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30,unique=True)
     ticker = models.CharField(max_length=30, unique=True)
     last_price = models.FloatField(default=0)
