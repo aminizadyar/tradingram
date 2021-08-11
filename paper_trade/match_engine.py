@@ -1,5 +1,36 @@
 from .models import Portfolio
 
+def simple_sell(order,user,symbol):
+    if float(order.price) <= symbol.last_price:
+
+        if Portfolio.objects.filter(user=user , symbol = symbol).exists():
+            portfolio= Portfolio.objects.get(user=user, symbol=symbol)
+
+            if int(order.quantity) <= portfolio.quantity :
+                cash_earned = float(order.price) * int(order.quantity)
+                user.profile.cash += cash_earned
+                user.profile.save()
+                order.result = 'S'
+                order.save()
+                state = "your order has been successful"
+                portfolio.quantity -= int(order.quantity)
+                portfolio.save()
+
+                if portfolio.quantity == 0 :
+                    portfolio.delete()
+
+            else:
+                state = "you don't have enough of this ticker in your portfolio."
+
+        else:
+            state = "you don't have this ticker in your portfolio"
+
+    else:
+        state = "your input price is lower than the market price"
+
+    return state
+
+
 def simple_buy(order,user,symbol):
     if float(order.price) >= symbol.last_price:
 
@@ -26,7 +57,7 @@ def simple_buy(order,user,symbol):
         else:
             state = "you don't have enough cash to buy this ticker"
     else:
-        state = "your input price is lower than the market price"
+        state = "your input price is bigger than the market price"
 
     return state
 
