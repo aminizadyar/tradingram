@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class PortfolioItem(User,Ticker):
     quantity = models.IntegerField(blank=False)
 
+
 class Order(models.Model):
     DIRECTION_CHOICES = (
         ('L','Long'),
@@ -22,4 +23,4 @@ class Order(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
     direction = models.CharField(max_length=1,choices=DIRECTION_CHOICES)
-    result = models.CharField(max_length=1,choices=RESULT_CHOICES)
+    result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')

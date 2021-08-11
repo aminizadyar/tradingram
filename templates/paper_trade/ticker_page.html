@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {{ obj.name }}
+    <br>
+    {{ obj.last_price }}
+    <br>
+    {{ obj.ticker }}
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">order</button>
+    </form>
+
+</body>
+</html>
