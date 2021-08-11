@@ -6,11 +6,14 @@
 </head>
 <body>
 
-    {{ obj.name }}
+        <p> name : {{ ticker.name }}</p>
     <br>
-    {{ obj.last_price }}
+        <p> last price: {{ ticker.last_price }} </p>
     <br>
-    {{ obj.ticker }}
+
+        <p> symbol : {{ ticker.symbol }} </p>
+    <br>
+        <p>your balance : {{ user.profile.cash }} </p>
     <br>
     <form method="post">
         {% csrf_token %}
@@ -18,6 +21,8 @@
 
         <button type="submit">order</button>
     </form>
-
+    <h1>
+        {{ state }}
+    </h1>
 </body>
 </html>
