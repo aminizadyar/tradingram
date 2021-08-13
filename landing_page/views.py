@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from .forms import SignUpForm
 from .forms import SignInForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect
 
 
 def landing_page(request):
-
+    logout(request)
     if request.method == 'POST':
         form = SignInForm(request.POST)
         username = request.POST.get('username')
