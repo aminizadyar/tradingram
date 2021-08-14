@@ -21,9 +21,17 @@ from landing_page.urls import urlpatterns as landing_page_urlpatterns
 from api.urls import urlpatterns as api_urlpatterns
 from social_media.urls import urlpatterns as social_media_urlpatterns
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ] + paper_trade_urlpatterns + landing_page_urlpatterns + api_urlpatterns + social_media_urlpatterns
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
