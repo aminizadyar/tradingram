@@ -2,24 +2,24 @@ from .models import Portfolio
 from .models import OpenPositionOrder
 
 def simple_sell(order,user,symbol):
-    if float(order.price) <= symbol.last_price:
+    if float(order.price) <= symbol.bid:
 
         if Portfolio.objects.filter(user=user , symbol = symbol).exists():
             portfolio= Portfolio.objects.get(user=user, symbol=symbol)
 
             if int(order.quantity) <= portfolio.quantity :
-                cash_earned = symbol.last_price * int(order.quantity)
+                cash_earned = symbol.bid * int(order.quantity)
                 user.profile.cash += cash_earned
                 user.profile.save()
                 order.result = 'S'
-                order.price_matched= symbol.last_price
+                order.price_matched= symbol.bid
                 order.save()
 
                 open_position_order=OpenPositionOrder()
                 open_position_order.user = user
                 open_position_order.symbol = symbol
                 open_position_order.price = order.price
-                open_position_order.price_matched = symbol.last_price
+                open_position_order.price_matched = symbol.bid
                 open_position_order.quantity = order.quantity
                 open_position_order.direction = order.direction
                 open_position_order.save()
@@ -39,29 +39,29 @@ def simple_sell(order,user,symbol):
             state = "you don't have this ticker in your portfolio"
 
     else:
-        state = "your input price is higher than the market price"
+        state = "your input price is higher than the market bid price"
 
     return state
 
 
 def simple_buy(order,user,symbol):
-    if float(order.price) >= symbol.last_price:
+    if float(order.price) >= symbol.ask:
 
-        cash_required= symbol.last_price*int(order.quantity)
+        cash_required= symbol.ask * int(order.quantity)
         if cash_required <= user.profile.cash :
 
             user.profile.cash -= cash_required
             user.profile.save()
 
             order.result = 'S'
-            order.price_matched = symbol.last_price
+            order.price_matched = symbol.ask
             order.save()
 
             open_position_order = OpenPositionOrder()
             open_position_order.user = user
             open_position_order.symbol = symbol
             open_position_order.price = order.price
-            open_position_order.price_matched = symbol.last_price
+            open_position_order.price_matched = symbol.ask
             open_position_order.quantity = order.quantity
             open_position_order.direction = order.direction
             open_position_order.save()
@@ -81,7 +81,7 @@ def simple_buy(order,user,symbol):
         else:
             state = "you don't have enough cash to buy this ticker"
     else:
-        state = "your input price is lower than the market price"
+        state = "your input price is lower than the market ask price"
 
     return state
 
