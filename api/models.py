@@ -26,18 +26,32 @@ class Index(models.Model):
 
 
 class Symbol(models.Model):
+    MARKET_CHOICES = (
+        ('FX', 'Forex'),
+        ('ST', 'Stock'),
+        ('CR', 'Cryptocurreny'),
+        ('CF', 'CommodityFutures'),
+        ('IN', 'Index'),
+    )
     name = models.CharField(max_length=30)
     symbol = models.CharField(max_length=30, unique=True)
     last_price = models.FloatField(default=0)
     spread = models.FloatField(default=0.001)
+    market = models.CharField(max_length=2,choices=MARKET_CHOICES,default='ST')
+    numerator = models.CharField(max_length=2,choices=MARKET_CHOICES,default='ST')
+    denominator = models.CharField(max_length=2,choices=MARKET_CHOICES,default='ST')
 
     def __str__(self):
         return self.symbol
-
     @property
     def bid(self):
         return self.last_price * (1 - self.spread)
-
     @property
     def ask(self):
         return self.last_price * (1 + self.spread)
+    @property
+    def numerator(self):
+        return self.symbol[0:3]
+    @property
+    def denominator(self):
+        return self.symbol[-3:]
