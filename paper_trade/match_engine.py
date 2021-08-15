@@ -88,7 +88,6 @@ def simple_buy(order,user,symbol):
 
 
 # in forex match engine, we must check if one of five different scenarios happen.
-
 def forex_match_engine_long(order,user,symbol):
     if order.price >= symbol.ask :
         # first scenario is that the user has not taken any position in that in instrument before.

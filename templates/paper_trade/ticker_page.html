@@ -17,7 +17,9 @@
         <br>
         <p>username : {{ user.username }} </p>
     <br>
-        <p>your balance : {{ user.profile.cash }} </p>
+        <p>your cash : {{ user.profile.cash }} </p>
+    <br>
+        <p>your free margin : {{ user.profile.free_margin }} </p>
     <br>
     <form method="post">
         {% csrf_token %}
