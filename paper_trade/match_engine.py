@@ -1,4 +1,5 @@
 from .models import Portfolio
+from .models import Position
 from .models import OpenPositionOrder
 
 def simple_sell(order,user,symbol):
@@ -7,8 +8,8 @@ def simple_sell(order,user,symbol):
         if Portfolio.objects.filter(user=user , symbol = symbol).exists():
             portfolio= Portfolio.objects.get(user=user, symbol=symbol)
 
-            if int(order.quantity) <= portfolio.quantity :
-                cash_earned = symbol.bid * int(order.quantity)
+            if float(order.quantity) <= portfolio.quantity :
+                cash_earned = symbol.bid * float(order.quantity)
                 user.profile.cash += cash_earned
                 user.profile.save()
                 order.result = 'S'
@@ -25,7 +26,7 @@ def simple_sell(order,user,symbol):
                 open_position_order.save()
 
                 state = "your order has been successful"
-                portfolio.quantity -= int(order.quantity)
+                portfolio.quantity -= float(order.quantity)
                 portfolio.save()
 
                 if portfolio.quantity == 0 :
@@ -47,7 +48,7 @@ def simple_sell(order,user,symbol):
 def simple_buy(order,user,symbol):
     if float(order.price) >= symbol.ask:
 
-        cash_required= symbol.ask * int(order.quantity)
+        cash_required= symbol.ask * float(order.quantity)
         if cash_required <= user.profile.cash :
 
             user.profile.cash -= cash_required
@@ -70,7 +71,7 @@ def simple_buy(order,user,symbol):
 
             if Portfolio.objects.filter(user=user , symbol = symbol).exists():
                 updated_portfolio = Portfolio.objects.get(user=user, symbol=symbol)
-                updated_portfolio.quantity += int(order.quantity)
+                updated_portfolio.quantity += float(order.quantity)
                 updated_portfolio.save()
             else :
                 created_portfolio = Portfolio()
@@ -86,3 +87,33 @@ def simple_buy(order,user,symbol):
     return state
 
 
+def forex_match_engine(order,user,symbol):
+
+    # in this match engine, we first check if one of five different scenarios happen.
+    # first scenario is that the user has not taken any position in that in instrument before.
+
+    if not Position.objects.filter(user=user, symbol=symbol).exists():
+        required_margin = ((symbol.last_price) * 100000 * float(order.quantity)) / user.profile.leverage
+
+        if required_margin <= user.profile.free_margin:
+
+            user.profile.free_margin -= required_margin
+
+            order.result = 'S'
+            order.price_matched = symbol.last_price
+            order.save()
+
+            new_position = Position()
+            new_position.user = user
+            new_position.symbol = symbol
+            new_position.quantity = float (order.quantity)
+            new_position.average_price = symbol.last_price
+            new_position.save()
+
+            state = "your order has been successful, you have taken a new " + order.get_direction_display() + " position in " + symbol.name
+        else:
+            state ="you don't have enough free margin in your account to take this position"
+
+    else:
+        state = "some text"
+    return state

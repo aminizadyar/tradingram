@@ -10,6 +10,9 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/')
     cash = models.FloatField(default=100000)
+    free_margin = models.FloatField(default=cash)
+    leverage = models.IntegerField(default=200)
+
 
     def __str__(self):
         return self.user.username
