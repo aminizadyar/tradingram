@@ -94,22 +94,31 @@ def forex_match_engine_long(order,user,symbol):
         # first scenario is that the user has not taken any position in that in instrument before.
         if not Position.objects.filter(user=user, symbol=symbol).exists():
             state = forex_match_engine_new_position(order,user,symbol,symbol.ask)
-
         else:
-            state = "some text2"
-
+            existing_position = Position.objects.get(user=user, symbol=symbol)
+            # second scenario is that the user is taking a same direction position
+            if (order.quantity) * (existing_position.quantity) > 0 :
+                state = forex_match_engine_same_direction_position(order,user,symbol,symbol.ask,existing_position)
+            else :
+                state = "some text / opposite direction not implemented"
     else:
         state = "your input price is lower than the market ask price"
     return state
+
+
 
 def forex_match_engine_short(order,user,symbol):
     if order.price <= symbol.bid :
         # first scenario is that the user has not taken any position in that in instrument before.
         if not Position.objects.filter(user=user, symbol=symbol).exists():
             state = forex_match_engine_new_position(order,user,symbol,symbol.bid)
-
         else:
-            state = "some text2"
+            existing_position = Position.objects.get(user=user, symbol=symbol)
+            # second scenario is that the user is taking a same direction position
+            if (order.quantity * -1) * (existing_position.quantity) > 0:
+                state = forex_match_engine_same_direction_position(order, user, symbol, symbol.bid, existing_position)
+            else:
+                state = "some text / opposite direction not implemented"
 
     else:
         state = "your input price is higher than the market bid price"
@@ -119,6 +128,11 @@ def forex_match_engine_short(order,user,symbol):
 
 
 def forex_match_engine_new_position(order,user,symbol,matched_price):
+    # short positions must have negative quantity. in this part, we check the direction.
+    if order.direction == 'L':
+        direction = 1
+    else:
+        direction = -1
     required_margin = ((matched_price) * 100000 * (order.quantity)) / user.profile.leverage
 
     if required_margin <= user.profile.free_margin:
@@ -133,14 +147,38 @@ def forex_match_engine_new_position(order,user,symbol,matched_price):
         new_position = Position()
         new_position.user = user
         new_position.symbol = symbol
-        if order.direction == 'L':
-            new_position.quantity = order.quantity
-        else:
-            new_position.quantity = -1 * order.quantity
+        new_position.quantity = order.quantity * direction
         new_position.average_price = matched_price
         new_position.save()
 
         state = "your order has been successful, you have taken a new " + order.get_direction_display() + " position in " + symbol.name
+    else:
+        state = "you don't have enough free margin in your account to take this position"
+    return state
+
+
+def forex_match_engine_same_direction_position(order,user,symbol,matched_price,existing_position):
+# short positions must have negative quantity. in this part, we check the direction.
+    if order.direction == 'L':
+        direction = 1
+    else:
+        direction = -1
+    required_margin = ((matched_price) * 100000 * (order.quantity)) / user.profile.leverage
+
+    if required_margin <= user.profile.free_margin:
+        user.profile.free_margin -= required_margin
+        user.profile.save()
+
+        order.result = 'S'
+        order.price_matched = matched_price
+        order.save()
+
+        existing_position.average_price = ((order.quantity*direction * matched_price) + (existing_position.quantity * existing_position.average_price)) / (existing_position.quantity + (order.quantity*direction))
+        existing_position.quantity += order.quantity * direction
+        existing_position.save()
+
+        state = "your order has been successful, you have added to your " + order.get_direction_display() + " position in " + symbol.name
+
     else:
         state = "you don't have enough free margin in your account to take this position"
     return state
