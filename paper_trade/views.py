@@ -4,7 +4,7 @@ from django.db import transaction
 from .forms import OrderForm
 from api.models import Symbol
 from .models import Order
-from .match_engine import simple_buy , simple_sell , forex_match_engine
+from .match_engine import simple_buy , simple_sell , forex_match_engine_long, forex_match_engine_short
 
 @login_required
 @transaction.atomic
@@ -14,11 +14,8 @@ def symbol_page(request,symbol):
     form = OrderForm(request.POST)
     if form.is_valid():
         order = Order()
-        # order.price=request.POST.get('price')
         order.price=form.cleaned_data['price']
-        # order.quantity=request.POST.get('quantity')
         order.quantity=form.cleaned_data['quantity']
-        # order.direction=request.POST.get('direction')
         order.direction=form.cleaned_data['direction']
         order.symbol=symbol_of_interest
         order.user=request.user
@@ -29,9 +26,10 @@ def symbol_page(request,symbol):
             else:
                 state = simple_sell(order,request.user,symbol_of_interest)
         else:
-            state = forex_match_engine(order,request.user,symbol_of_interest)
-
-
+            if order.direction == 'L':
+                state = forex_match_engine_long(order,request.user,symbol_of_interest)
+            else:
+                state = forex_match_engine_short(order,request.user,symbol_of_interest)
     else:
         form = OrderForm()
 

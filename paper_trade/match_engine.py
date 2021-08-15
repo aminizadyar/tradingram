@@ -87,33 +87,60 @@ def simple_buy(order,user,symbol):
     return state
 
 
-def forex_match_engine(order,user,symbol):
+# in forex match engine, we must check if one of five different scenarios happen.
 
-    # in this match engine, we first check if one of five different scenarios happen.
-    # first scenario is that the user has not taken any position in that in instrument before.
+def forex_match_engine_long(order,user,symbol):
+    if order.price >= symbol.ask :
+        # first scenario is that the user has not taken any position in that in instrument before.
+        if not Position.objects.filter(user=user, symbol=symbol).exists():
+            state = forex_match_engine_new_position(order,user,symbol,symbol.ask)
 
-    if not Position.objects.filter(user=user, symbol=symbol).exists():
-        required_margin = ((symbol.last_price) * 100000 * float(order.quantity)) / user.profile.leverage
-
-        if required_margin <= user.profile.free_margin:
-
-            user.profile.free_margin -= required_margin
-
-            order.result = 'S'
-            order.price_matched = symbol.last_price
-            order.save()
-
-            new_position = Position()
-            new_position.user = user
-            new_position.symbol = symbol
-            new_position.quantity = float (order.quantity)
-            new_position.average_price = symbol.last_price
-            new_position.save()
-
-            state = "your order has been successful, you have taken a new " + order.get_direction_display() + " position in " + symbol.name
         else:
-            state ="you don't have enough free margin in your account to take this position"
+            state = "some text2"
 
     else:
-        state = "some text"
+        state = "your input price is lower than the market ask price"
+    return state
+
+def forex_match_engine_short(order,user,symbol):
+    if order.price <= symbol.bid :
+        # first scenario is that the user has not taken any position in that in instrument before.
+        if not Position.objects.filter(user=user, symbol=symbol).exists():
+            state = forex_match_engine_new_position(order,user,symbol,symbol.bid)
+
+        else:
+            state = "some text2"
+
+    else:
+        state = "your input price is higher than the market bid price"
+    return state
+
+
+
+
+def forex_match_engine_new_position(order,user,symbol,matched_price):
+    required_margin = ((matched_price) * 100000 * (order.quantity)) / user.profile.leverage
+
+    if required_margin <= user.profile.free_margin:
+
+        user.profile.free_margin -= required_margin
+        user.profile.save()
+
+        order.result = 'S'
+        order.price_matched = matched_price
+        order.save()
+
+        new_position = Position()
+        new_position.user = user
+        new_position.symbol = symbol
+        if order.direction == 'L':
+            new_position.quantity = order.quantity
+        else:
+            new_position.quantity = -1 * order.quantity
+        new_position.average_price = matched_price
+        new_position.save()
+
+        state = "your order has been successful, you have taken a new " + order.get_direction_display() + " position in " + symbol.name
+    else:
+        state = "you don't have enough free margin in your account to take this position"
     return state
