@@ -138,17 +138,17 @@ def forex_match_engine_short(order,user,symbol):
     return state
 
 
-def forex_margin_calculator(ticker,order,user):
+def forex_margin_calculator(ticker,order_quantity,user):
     if ticker.numerator == 'USD':
-        return (100000 * order.quantity) / user.profile.leverage
+        return (100000 * order_quantity) / user.profile.leverage
     if ticker.denominator == 'USD':
-        return ((ticker.last_price) * 100000 * (order.quantity)) / user.profile.leverage
+        return ((ticker.last_price) * 100000 * (order_quantity)) / user.profile.leverage
     usd_indexed = ticker.numerator +'USD'
     symbol_indexed = 'USD' + ticker.numerator
     if Symbol.objects.filter(symbol=usd_indexed).exists():
-        return ((Symbol.objects.get(symbol=usd_indexed).last_price) * 100000 * (order.quantity)) / user.profile.leverage
+        return ((Symbol.objects.get(symbol=usd_indexed).last_price) * 100000 * (order_quantity)) / user.profile.leverage
     else :
-        return (100000 * order.quantity) / (user.profile.leverage * (Symbol.objects.get(symbol=symbol_indexed).last_price))
+        return (100000 * order_quantity) / (user.profile.leverage * (Symbol.objects.get(symbol=symbol_indexed).last_price))
 
 def forex_match_engine_new_position(order,user,symbol,matched_price):
     # short positions must have negative quantity. in this part, we check the direction.
@@ -156,7 +156,7 @@ def forex_match_engine_new_position(order,user,symbol,matched_price):
         direction = 1
     else:
         direction = -1
-    required_margin = forex_margin_calculator(symbol,order,user)
+    required_margin = forex_margin_calculator(symbol,order.quantity,user)
 
     if required_margin <= user.profile.free_margin:
 
@@ -186,7 +186,7 @@ def forex_match_engine_same_direction_position(order,user,symbol,matched_price,e
         direction = 1
     else:
         direction = -1
-    required_margin = forex_margin_calculator(symbol,order,user)
+    required_margin = forex_margin_calculator(symbol,order.quantity,user)
 
     if required_margin <= user.profile.free_margin:
         user.profile.free_margin -= required_margin
@@ -212,8 +212,23 @@ def forex_match_engine_opposite_direction_closing_position(order,user,symbol,mat
     else:
         direction = -1
 
+    order.result = 'S'
+    order.price_matched = matched_price
+    order.save()
 
-    state = "opposite position. only closing"
+    profit_or_loss = ((existing_position.average_price - matched_price) * direction) * symbol.pip * symbol.pip_value * order.quantity
+    freed_margin = forex_margin_calculator(symbol,order.quantity,user)
+    user.profile.cash += profit_or_loss
+    user.profile.free_margin += profit_or_loss + freed_margin
+    user.profile.save()
+
+    existing_position.quantity += order.quantity * direction
+    if existing_position.quantity == 0 :
+        existing_position.delete()
+    else:
+        existing_position.save()
+
+    state = "your order has been successful. you have closed " + str(order.quantity) + " of your positions"
     return state
 
 
