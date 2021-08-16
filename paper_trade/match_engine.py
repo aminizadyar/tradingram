@@ -88,7 +88,7 @@ def simple_buy(order,user,symbol):
     return state
 
 
-# in forex match engine, we must check if one of five different scenarios happen.
+# in forex match engine, we must check if one of four different scenarios happen.
 def forex_match_engine_long(order,user,symbol):
     if order.price >= symbol.ask :
         # first scenario is that the user has not taken any position in that in instrument before.
@@ -100,7 +100,13 @@ def forex_match_engine_long(order,user,symbol):
             if (order.quantity) * (existing_position.quantity) > 0 :
                 state = forex_match_engine_same_direction_position(order,user,symbol,symbol.ask,existing_position)
             else :
-                state = "some text / opposite direction not implemented"
+                if order.quantity + existing_position.quantity <= 0 :
+                    # third scenario is that the user is closing its current positions.
+                    state = forex_match_engine_opposite_direction_closing_position(order,user,symbol,symbol.ask,existing_position)
+                else:
+                    # the last scenario is that the user is closing its current positions and taking opposite positions
+                    state = forex_match_engine_opposite_direction_opening_position(order,user,symbol,symbol.ask,existing_position)
+
     else:
         state = "your input price is lower than the market ask price"
     return state
@@ -115,10 +121,17 @@ def forex_match_engine_short(order,user,symbol):
         else:
             existing_position = Position.objects.get(user=user, symbol=symbol)
             # second scenario is that the user is taking a same direction position
+            # order quantity * -1 is for short positions
             if (order.quantity * -1) * (existing_position.quantity) > 0:
                 state = forex_match_engine_same_direction_position(order, user, symbol, symbol.bid, existing_position)
             else:
-                state = "some text / opposite direction not implemented"
+                # third scenario is that the user is closing its current positions.
+                if (order.quantity * -1) + existing_position.quantity >= 0:
+                    state = forex_match_engine_opposite_direction_closing_position(order, user, symbol, symbol.bid , existing_position)
+                else:
+                    # the last scenario is that the user is closing its current positions and taking opposite positions
+                    state = forex_match_engine_opposite_direction_opening_position(order, user, symbol, symbol.bid , existing_position)
+
 
     else:
         state = "your input price is higher than the market bid price"
@@ -191,4 +204,24 @@ def forex_match_engine_same_direction_position(order,user,symbol,matched_price,e
 
     else:
         state = "you don't have enough free margin in your account to take this position"
+    return state
+
+def forex_match_engine_opposite_direction_closing_position(order,user,symbol,matched_price,existing_position):
+    if order.direction == 'L':
+        direction = 1
+    else:
+        direction = -1
+
+
+    state = "opposite position. only closing"
+    return state
+
+
+def forex_match_engine_opposite_direction_opening_position(order, user, symbol, matched_price, existing_position):
+    if order.direction == 'L':
+        direction = 1
+    else:
+        direction = -1
+
+    state = "opposite position. opening also"
     return state
