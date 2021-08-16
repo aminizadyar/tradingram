@@ -241,8 +241,33 @@ def forex_match_engine_opposite_direction_closing_position(order,user,symbol,mat
 def forex_match_engine_opposite_direction_opening_position(order, user, symbol, matched_price, existing_position):
     if order.direction == 'L':
         direction = 1
+        closed_position = 'Short'
     else:
         direction = -1
+        closed_position = 'Long'
 
-    state = "opposite position. opening also"
+    opposite_position_quantity = order.quantity + existing_position.quantity * direction
+    required_margin = forex_margin_calculator(symbol, opposite_position_quantity ,user)
+    if required_margin <= (user.profile.free_margin + existing_position.blocked_margin) :
+
+        order.result = 'S'
+        order.price_matched = matched_price
+        order.save()
+
+        profit_or_loss = ((existing_position.average_price - matched_price) * -1) * symbol.pip * symbol.pip_value * existing_position.quantity
+        user.profile.cash += profit_or_loss
+        user.profile.free_margin += (profit_or_loss + existing_position.blocked_margin - required_margin)
+        user.profile.save()
+
+        existing_position.average_price = matched_price
+        existing_position.quantity = opposite_position_quantity * direction
+        existing_position.blocked_margin = required_margin
+        existing_position.save()
+
+
+        state = "your order has been successful. you have closed all of your previous " + closed_position + " positions. you have now opended " + str(opposite_position_quantity) + " new " + order.get_direction_display() + " positions"
+
+    else:
+        state = "you don't have enough free margin in your account to do this transaction"
+
     return state
