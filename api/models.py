@@ -41,7 +41,7 @@ class Symbol(models.Model):
     tick_size_of_price = models.IntegerField(default=5)
     minimum_quantity_decimal_point = models.IntegerField(default=5)
     # fields below are only useful for forex pairs
-    pip = models.IntegerField(default=1000)
+    pip = models.IntegerField(default=10000)
 
     def __str__(self):
         return self.symbol
@@ -57,3 +57,16 @@ class Symbol(models.Model):
     @property
     def denominator(self):
         return self.symbol[-3:]
+    @property
+    def pip_value(self):
+        if self.denominator == 'USD':
+            return 100000 / self.pip
+        if self.numerator == 'USD':
+            return 100000 / (self.pip * self.last_price)
+        usd_indexed = self.numerator + 'USD'
+        symbol_indexed = 'USD' + self.numerator
+        if Symbol.objects.filter(symbol=usd_indexed).exists():
+            return (100000 * Symbol.objects.get(symbol=usd_indexed).last_price) / (self.pip * self.last_price)
+
+        else:
+            return 100000 / (self.pip * Symbol.objects.get(symbol=symbol_indexed).last_price * self.last_price)
