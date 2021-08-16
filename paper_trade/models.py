@@ -16,6 +16,7 @@ class Position(models.Model):
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
     quantity = models.FloatField(blank=False)
     average_price = models.FloatField(blank=False)
+    blocked_margin = models.FloatField(blank=False,null=True)
 
     def __str__(self):
         return self.user.username + " --- " + self.symbol.symbol + " --- Portfolio"

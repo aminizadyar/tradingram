@@ -132,7 +132,6 @@ def forex_match_engine_short(order,user,symbol):
                     # the last scenario is that the user is closing its current positions and taking opposite positions
                     state = forex_match_engine_opposite_direction_opening_position(order, user, symbol, symbol.bid , existing_position)
 
-
     else:
         state = "your input price is higher than the market bid price"
     return state
@@ -172,6 +171,7 @@ def forex_match_engine_new_position(order,user,symbol,matched_price):
         new_position.symbol = symbol
         new_position.quantity = order.quantity * direction
         new_position.average_price = matched_price
+        new_position.blocked_margin = required_margin
         new_position.save()
 
         state = "your order has been successful, you have taken a new " + order.get_direction_display() + " position in " + symbol.name
@@ -198,6 +198,7 @@ def forex_match_engine_same_direction_position(order,user,symbol,matched_price,e
 
         existing_position.average_price = ((order.quantity*direction * matched_price) + (existing_position.quantity * existing_position.average_price)) / (existing_position.quantity + (order.quantity*direction))
         existing_position.quantity += order.quantity * direction
+        existing_position.blocked_margin += required_margin
         existing_position.save()
 
         state = "your order has been successful, you have added to your " + order.get_direction_display() + " position in " + symbol.name
@@ -208,8 +209,10 @@ def forex_match_engine_same_direction_position(order,user,symbol,matched_price,e
 
 def forex_match_engine_opposite_direction_closing_position(order,user,symbol,matched_price,existing_position):
     if order.direction == 'L':
+        closed_position = 'Short'
         direction = 1
     else:
+        closed_position = 'Long'
         direction = -1
 
     order.result = 'S'
@@ -217,18 +220,21 @@ def forex_match_engine_opposite_direction_closing_position(order,user,symbol,mat
     order.save()
 
     profit_or_loss = ((existing_position.average_price - matched_price) * direction) * symbol.pip * symbol.pip_value * order.quantity
-    freed_margin = forex_margin_calculator(symbol,order.quantity,user)
+    freed_margin = ((order.quantity * -1 * direction) / existing_position.quantity) * existing_position.blocked_margin
     user.profile.cash += profit_or_loss
     user.profile.free_margin += profit_or_loss + freed_margin
     user.profile.save()
 
     existing_position.quantity += order.quantity * direction
+    existing_position.blocked_margin -= freed_margin
     if existing_position.quantity == 0 :
         existing_position.delete()
+        state = "your order has been successful. you have closed all of your " + closed_position + " positions"
     else:
         existing_position.save()
+        state = "your order has been successful. you have closed " + str(order.quantity) + " of your " + closed_position + " positions"
 
-    state = "your order has been successful. you have closed " + str(order.quantity) + " of your positions"
+
     return state
 
 
