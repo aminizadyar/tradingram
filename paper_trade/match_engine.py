@@ -1,6 +1,7 @@
 from .models import Portfolio
 from .models import Position
 from .models import OpenPositionOrder
+from api.models import Symbol
 
 def simple_sell(order,user,symbol):
     if float(order.price) <= symbol.bid:
@@ -124,7 +125,17 @@ def forex_match_engine_short(order,user,symbol):
     return state
 
 
-
+def forex_margin_calculator(ticker,order,user):
+    if ticker.numerator == 'USD':
+        return (100000 * order.quantity) / user.profile.leverage
+    if ticker.denominator == 'USD':
+        return ((ticker.last_price) * 100000 * (order.quantity)) / user.profile.leverage
+    usd_indexed = ticker.numerator +'USD'
+    symbol_indexed = 'USD' + ticker.numerator
+    if Symbol.objects.filter(symbol=usd_indexed).exists():
+        return ((Symbol.objects.get(symbol=usd_indexed).last_price) * 100000 * (order.quantity)) / user.profile.leverage
+    else :
+        return (100000 * order.quantity) / (user.profile.leverage * (Symbol.objects.get(symbol=symbol_indexed).last_price))
 
 def forex_match_engine_new_position(order,user,symbol,matched_price):
     # short positions must have negative quantity. in this part, we check the direction.
@@ -132,7 +143,7 @@ def forex_match_engine_new_position(order,user,symbol,matched_price):
         direction = 1
     else:
         direction = -1
-    required_margin = ((matched_price) * 100000 * (order.quantity)) / user.profile.leverage
+    required_margin = forex_margin_calculator(symbol,order,user)
 
     if required_margin <= user.profile.free_margin:
 
@@ -162,7 +173,7 @@ def forex_match_engine_same_direction_position(order,user,symbol,matched_price,e
         direction = 1
     else:
         direction = -1
-    required_margin = ((matched_price) * 100000 * (order.quantity)) / user.profile.leverage
+    required_margin = forex_margin_calculator(symbol,order,user)
 
     if required_margin <= user.profile.free_margin:
         user.profile.free_margin -= required_margin

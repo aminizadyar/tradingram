@@ -38,9 +38,10 @@ class Symbol(models.Model):
     last_price = models.FloatField(default=0)
     spread = models.FloatField(default=0.001)
     market = models.CharField(max_length=2,choices=MARKET_CHOICES,default='ST')
-    pip_value=models.FloatField(default=1)
     tick_size_of_price = models.IntegerField(default=5)
     minimum_quantity_decimal_point = models.IntegerField(default=5)
+    # fields below are only useful for forex pairs
+    pip = models.IntegerField(default=1000)
 
     def __str__(self):
         return self.symbol
