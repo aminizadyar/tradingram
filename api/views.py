@@ -1,36 +1,7 @@
 from django.shortcuts import render
-from .models import Stock
-from .models import CryptoCurrency
-from .models import ForexPair
-from .models import FuturesContract
-from .models import Index
+from .models import Symbol
 
-
-def stocks_last_price(request):
-
-    qs = Stock.objects.all();
+def markets_page(request):
+    qs = Symbol.objects.all()
     context = {'qs': qs}
-    return render(request, 'api/stocks_last_price.html', context)
-
-def cryptocurrencies_last_price(request):
-    qs = CryptoCurrency.objects.all();
-    context = {'qs': qs}
-    return render(request, 'api/cryptocurrencies_last_price.html', context)
-
-def forex_live_data(request):
-
-    qs = ForexPair.objects.all();
-    context = {'qs': qs}
-    return render(request, 'api/forex_live_data.html', context)
-
-def futures_last_price(request):
-
-    qs = FuturesContract.objects.all();
-    context = {'qs': qs}
-    return render(request, 'api/futures_last_price.html', context)
-
-def index_last_data(request):
-
-    qs = Index.objects.all();
-    context = {'qs': qs}
-    return render(request, 'api/index_last_data.html', context)
+    return render(request, 'api/markets_page.html', context)

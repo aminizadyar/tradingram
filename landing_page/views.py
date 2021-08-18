@@ -15,7 +15,7 @@ def landing_page(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect('cryptocurrencies_last_price')
+                return redirect('markets_page')
             else:
                 state = "Your account is not active, please contact the administrator."
         else:
@@ -37,7 +37,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('cryptocurrencies_last_price')
+            return redirect('markets_page')
     else:
         form = SignUpForm()
     return render(request, 'landing_page/signup.html',{'form':form})
