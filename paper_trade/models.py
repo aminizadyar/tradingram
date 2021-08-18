@@ -22,7 +22,7 @@ class OrderOpenPosition(models.Model):
     modified_datetime = models.DateTimeField(auto_now=True)
     direction = models.IntegerField(choices=DIRECTION_CHOICES)
     result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')
-    leverage = models.IntegerField(default=1)
+    leverage = models.IntegerField(default=1,blank=True)
     take_profit = models.FloatField(blank=True , null= True)
     stop_loss = models.FloatField(blank=True,null=True)
 
@@ -43,14 +43,14 @@ class OrderClosePosition(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
     input_price = models.FloatField(blank=False)
-    close_position_price = models.FloatField(blank=True)
-    open_position_price = models.FloatField(blank=False)
+    close_position_price = models.FloatField(blank=True,null=True)
+    open_position_price = models.FloatField(blank=True,null=True)
     quantity = models.FloatField(blank=False)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
-    direction = models.IntegerField(choices=DIRECTION_CHOICES)
+    direction = models.IntegerField(choices=DIRECTION_CHOICES,blank=True, null=True)
     result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')
-    freed_margin = models.FloatField(blank=True)
+    freed_margin = models.FloatField(blank=True,null=True)
 
     def __str__(self):
         return str(self.id) + " -- " + self.user.username + " -- " + self.symbol.symbol +  " -- " +str(self.created_datetime) +"--" + self.get_result_display()+ "--" +self.get_direction_display() +"  Order"

@@ -14,20 +14,35 @@
     <br>
         <p> ask : {{ ticker.ask }} </p>
     <br>
-
-
         <p>username : {{ user.username }} </p>
     <br>
         <p>your free margin : {{ user.profile.free_margin |floatformat:3 }} </p>
     <br>
+        <h1>
+        {{ state_open_order_status }}
+    </h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-
-        <button type="submit">order</button>
+        {{ order_open_position_form.as_p }}
+        <button name="open_order" type="submit">order</button>
     </form>
+
+    {% for open_position in open_positions %}
+    {{ open_position }}
+        <br>
+    {% endfor %}
+
     <h1>
-        {{ state }}
+        {{ state_close_order_status }}
     </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ order_close_position_form.as_p }}
+        <button name="close_order" type="submit">order</button>
+    </form>
+
+
+
 </body>
 </html>
