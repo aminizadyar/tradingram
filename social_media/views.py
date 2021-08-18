@@ -18,7 +18,7 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, ('Your profile was successfully updated!'))
-            return redirect('cryptocurrencies_last_price')
+            return redirect('markets_page')
         else:
             messages.error(request, ('Please correct the error below.'))
     else:
