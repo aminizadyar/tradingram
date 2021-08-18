@@ -6,6 +6,12 @@ from api.models import Symbol
 from .models import Order
 from .match_engine import simple_buy , simple_sell , forex_match_engine_long, forex_match_engine_short
 
+def markets_page(request):
+    qs = Symbol.objects.all()
+    context = {'qs': qs}
+    return render(request, 'paper_trade/markets_page.html', context)
+
+
 @login_required
 @transaction.atomic
 def symbol_page(request,symbol):
