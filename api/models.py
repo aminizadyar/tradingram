@@ -15,6 +15,7 @@ class Symbol(models.Model):
     market = models.CharField(max_length=2,choices=MARKET_CHOICES,default='ST')
     tick_size_of_price = models.IntegerField(default=5)
     minimum_quantity_decimal_point = models.IntegerField(default=5)
+    description = models.TextField(null=True,blank=True)
     # fields below are only useful for forex pairs
     pip = models.IntegerField(default=10000)
 
@@ -22,10 +23,10 @@ class Symbol(models.Model):
         return self.symbol
     @property
     def bid(self):
-        return self.last_price * (1 - self.spread)
+        return round(self.last_price * (1 - self.spread),self.tick_size_of_price)
     @property
     def ask(self):
-        return self.last_price * (1 + self.spread)
+        return round(self.last_price * (1 + self.spread),self.tick_size_of_price)
     @property
     def numerator(self):
         return self.symbol[0:3]
@@ -42,6 +43,5 @@ class Symbol(models.Model):
         symbol_indexed = 'USD' + self.numerator
         if Symbol.objects.filter(symbol=usd_indexed).exists():
             return (100000 * Symbol.objects.get(symbol=usd_indexed).last_price) / (self.pip * self.last_price)
-
         else:
             return 100000 / (self.pip * Symbol.objects.get(symbol=symbol_indexed).last_price * self.last_price)
