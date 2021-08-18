@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+User._meta.get_field('email')._unique = True
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
@@ -10,7 +12,7 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/')
     cash = models.FloatField(default=100000)
-    free_margin = models.FloatField(default=cash)
+    free_margin = models.FloatField(default=100000)
     leverage = models.IntegerField(default=200)
 
 

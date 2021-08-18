@@ -28,7 +28,7 @@ def landing_page(request):
     return render(request, 'landing_page/index.html', {'form': form,'state':state})
 
 
-def signup(request):
+def signup_page(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -40,4 +40,4 @@ def signup(request):
             return redirect('markets_page')
     else:
         form = SignUpForm()
-    return render(request, 'landing_page/signup.html',{'form':form})
+    return render(request, 'landing_page/signup_page.html',{'form':form})
