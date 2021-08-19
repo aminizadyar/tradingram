@@ -1,7 +1,13 @@
 from django.db import models
 from api.models import Symbol
 from django.contrib.auth.models import User
-from .match_engine_v2 import profit_or_loss_calculator
+
+def profit_or_loss_calculator(current_price,open_price,quantity,symbol,direction):
+    if symbol.market == 'FX':
+        return ((current_price - open_price) * direction) * symbol.pip * symbol.pip_value * quantity
+    else:
+        return (current_price - open_price) * direction * quantity
+
 
 class OrderOpenPosition(models.Model):
     LONG = 1
@@ -30,7 +36,7 @@ class OrderOpenPosition(models.Model):
     stop_loss = models.FloatField(blank=True, null=True)
 
     def __str__(self):
-        return "ID="+str(self.id) + " --- " + self.symbol.symbol + "---direction= " + self.get_direction_display() + "---initial quantity= " + str(self.initial_quantity) +  "---current quantity= " + str(self.current_quantity) +"---open price= " + str(self.matched_price)
+        return "ID="+str(self.id) + " --- " + self.symbol.symbol + "---direction= " + self.get_direction_display() + "---initial quantity= " + str(self.initial_quantity) +  "---current quantity= " + str(self.current_quantity) +"---open price= " + str(self.matched_price) + '--blocked margin=' + str(self.blocked_margin) + '--unrealized gain='+str(self.unrealized_gain)
 
     @property
     def blocked_margin(self):

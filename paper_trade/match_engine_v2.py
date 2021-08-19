@@ -1,41 +1,35 @@
-def open_order_match_engine(order,user,symbol):
-    state = "you have entered open order match engine"
-    return state
+from .models import OrderOpenPosition
+from .calculator import initial_margin_calculator
 
-def close_order_match_engine(order,user,symbol):
+def open_order_match_engine(order,user):
+    if order.direction == OrderOpenPosition.LONG and order.input_price < order.symbol.ask :
+        return "Failed. You want to take a new long position in " + order.symbol.symbol +" .Your input price is lower than the market ask price."
+    if order.direction == OrderOpenPosition.SHORT and order.input_price > order.symbol.bid :
+        return "Failed. You want to take a new short position in " + order.symbol.symbol +" .Your input price is higher than the market bid price."
+    if order.direction == OrderOpenPosition.LONG:
+        matched_price = order.symbol.ask
+    else:
+        matched_price = order.symbol.bid
+    required_margin = initial_margin_calculator(order,matched_price)
+    if required_margin <= user.profile.free_margin:
+        user.profile.free_margin -= required_margin
+        user.profile.save()
+
+        order.result = 'S'
+        order.matched_price = matched_price
+        order.current_quantity = order.initial_quantity
+        order.initial_margin = required_margin
+        order.save()
+        return "Successful. You've taken a new " + order.get_direction_display() + " position in " + order.symbol.symbol
+    else:
+        return "Failed. You want to take a new " +  order.get_direction_display() + " position in " + order.symbol.symbol +" .You don't have enough free margin in your account."
+
+
+def close_order_match_engine(order):
     state = "you have entered close order match engine"
     return state
 
-def profit_or_loss_calculator(current_price,open_price,quantity,symbol,direction):
-    if symbol.market == 'FX':
-        return ((current_price - open_price) * direction) * symbol.pip * symbol.pip_value * quantity
-    else:
-        return (current_price - open_price) * direction * quantity
 
 
-def margin_calculator(ticker,order_quantity):
-    if ticker.numerator == 'USD':
-        return (100000 * order_quantity) / user.profile.leverage
-    if ticker.denominator == 'USD':
-        return ((ticker.last_price) * 100000 * (order_quantity)) / user.profile.leverage
-    usd_indexed = ticker.numerator +'USD'
-    symbol_indexed = 'USD' + ticker.numerator
-    if Symbol.objects.filter(symbol=usd_indexed).exists():
-        return ((Symbol.objects.get(symbol=usd_indexed).last_price) * 100000 * (order_quantity)) / user.profile.leverage
-    else :
-        return (100000 * order_quantity) / (user.profile.leverage * (Symbol.objects.get(symbol=symbol_indexed).last_price))
 
-    def initial_margin(self):
-        if self.symbol.market == 'FX':
-            if self.symbol.numerator == 'USD':
-                return (100000 * self.initial_quantity) / self.leverage
-            if self.symbol.denominator == 'USD':
-                return (self.symbol.last_price * 100000 * self.initial_quantity) / self.leverage
-            usd_indexed = self.symbol.numerator + 'USD'
-            symbol_indexed = 'USD' + self.symbol.numerator
-            if Symbol.objects.filter(symbol=usd_indexed).exists():
-                return ((Symbol.objects.get(symbol=usd_indexed).last_price) * 100000 * (self.initial_quantity)) / self.leverage
-            else:
-                return (100000 * self.initial_quantity) / (self.leverage * (Symbol.objects.get(symbol=symbol_indexed).last_price))
-        else:
-            return (self.initial_quantity * self.price_matched) / self.leverage
+
