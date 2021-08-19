@@ -19,7 +19,7 @@ def symbol_page(request,symbol):
     state_open_order_status = "insert your order and open a new position"
     state_close_order_status = "choose one of your existing positions and fully/partially close it "
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
-    open_positions = [obj for obj in OrderOpenPosition.objects.all() if obj.is_an_open_position]
+    open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest) if obj.is_an_open_position]
 
     if request.method == 'POST':
         if 'open_order' in request.POST:
@@ -35,7 +35,7 @@ def symbol_page(request,symbol):
                 open_order.symbol = symbol_of_interest
                 open_order.user = request.user
                 open_order.save()
-                state_open_order_status = open_order_match_engine(open_order,request.user)
+                state_open_order_status = open_order_match_engine(open_order)
             order_close_position_form = OrderClosePositionForm(prefix='close_order')
         elif 'close_order' in request.POST:
             order_close_position_form = OrderClosePositionForm(request.POST, prefix='close_order')
@@ -45,7 +45,7 @@ def symbol_page(request,symbol):
                 close_order.quantity = order_close_position_form.cleaned_data['quantity']
                 close_order.related_open_order = OrderOpenPosition.objects.get(id=order_close_position_form.cleaned_data['open_position_id'])
                 close_order.save()
-                state_close_order_status = close_order_match_engine(close_order,request.user)
+                state_close_order_status = close_order_match_engine(close_order)
             order_open_position_form = OrderOpenPositionForm(prefix='open_order')
     else:
         order_open_position_form = OrderOpenPositionForm(prefix='open_order')
