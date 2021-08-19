@@ -5,7 +5,7 @@ from .forms import OrderOpenPositionForm
 from .forms import OrderClosePositionForm
 from api.models import Symbol
 from .models import OrderClosePosition,OrderOpenPosition
-from .match_engine_v2 import open_order_match_engine, close_order_match_engine
+from .match_engine import open_order_match_engine, close_order_match_engine
 
 def markets_page(request):
     qs = Symbol.objects.all()
@@ -16,8 +16,8 @@ def markets_page(request):
 @login_required
 @transaction.atomic
 def symbol_page(request,symbol):
-    state_open_order_status = "insert your order and open a new position"
-    state_close_order_status = "choose one of your existing positions and fully/partially close it "
+    state_open_order_status = "Insert your order and open a new position"
+    state_close_order_status = "Choose one of your existing positions and fully/partially close it "
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
     open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest) if obj.is_an_open_position]
 

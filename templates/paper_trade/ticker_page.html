@@ -6,17 +6,17 @@
 </head>
 <body>
 
-        <p> name : {{ ticker.name }}</p>
+        <p> Name : {{ ticker.name }}</p>
     <br>
-        <p> symbol : {{ ticker.symbol }} </p>
+        <p> Symbol : {{ ticker.symbol }} </p>
     <br>
-        <p> bid : {{ ticker.bid }} </p>
+        <p> Bid Price : {{ ticker.bid }} </p>
     <br>
-        <p> ask : {{ ticker.ask }} </p>
+        <p> Ask Price : {{ ticker.ask }} </p>
     <br>
-        <p>username : {{ user.username }} </p>
+        <p>Username : {{ user.username }} </p>
     <br>
-        <p>your free margin : {{ user.profile.free_margin |floatformat:3 }} </p>
+        <p>Your Free Margin : {{ user.profile.free_margin |floatformat:3 }} </p>
     <br>
         <h1>
         {{ state_open_order_status }}
