@@ -56,53 +56,27 @@ class OrderOpenPosition(models.Model):
 
 
 class OrderClosePosition(models.Model):
-    LONG = 1
-    SHORT = -1
-    DIRECTION_CHOICES = (
-        (LONG,'Long'),
-        (SHORT,'Short'),
-    )
     RESULT_CHOICES = (
         ('S', 'Success'),
         ('F', 'Failure'),
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
+    related_open_order = models.ForeignKey(OrderOpenPosition, on_delete=models.CASCADE)
     input_price = models.FloatField(blank=False)
     close_position_price = models.FloatField(blank=True,null=True)
-    open_position_price = models.FloatField(blank=True,null=True)
     quantity = models.FloatField(blank=False)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
-    direction = models.IntegerField(choices=DIRECTION_CHOICES,blank=True, null=True)
     result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')
     freed_margin = models.FloatField(blank=True,null=True)
-
     def __str__(self):
-        return str(self.id) + " -- " + self.user.username + " -- " + self.symbol.symbol +  " -- " +str(self.created_datetime) +"--" + self.get_result_display()+ "--" +self.get_direction_display() +"  Order"
+        return "Close Order for: " +str(self.related_open_order.symbol)+ "---"  +self.related_open_order.get_direction_display()+'---Close price: '+ str(self.close_position_price) + " closed position "+str(self.quantity) +" Result= " + self.get_result_display()
 
-
-
-class OpenPosition(models.Model):
-    LONG = 1
-    SHORT = -1
-    DIRECTION_CHOICES = (
-        (LONG, 'Long'),
-        (SHORT, 'Short'),
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
-    quantity = models.FloatField(blank=False)
-    direction = models.IntegerField(choices=DIRECTION_CHOICES)
-    matched_price = models.FloatField(blank=False)
-    blocked_margin = models.FloatField(blank=False,null=True)
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    modified_datetime = models.DateTimeField(auto_now=True)
-    take_profit = models.FloatField(blank=True, null=True)
-    stop_loss = models.FloatField(blank=True, null=True)
-
-    def __str__(self):
-        return str(self.id) + " -- " + self.user.username + " --- " + self.symbol.symbol + " quantity= " + str(self.quantity) + " open price= " + str(self.matched_price) + " direction= " + self.get_direction_display()
+    @property
+    def realized_gain(self):
+        if self.result == 'S':
+            return profit_or_loss_calculator(self.close_position_price, self.related_open_order.matched_price, self.quantity,self.related_open_order.symbol, self.related_open_order.direction)
+        else:
+            return 0
 
 class Position(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

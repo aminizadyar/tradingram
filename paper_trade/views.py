@@ -4,7 +4,7 @@ from django.db import transaction
 from .forms import OrderOpenPositionForm
 from .forms import OrderClosePositionForm
 from api.models import Symbol
-from .models import OpenPosition,OrderClosePosition,OrderOpenPosition
+from .models import OrderClosePosition,OrderOpenPosition
 from .match_engine_v2 import open_order_match_engine, close_order_match_engine
 
 def markets_page(request):
@@ -43,8 +43,7 @@ def symbol_page(request,symbol):
                 close_order = OrderClosePosition()
                 close_order.input_price = order_close_position_form.cleaned_data['input_price']
                 close_order.quantity = order_close_position_form.cleaned_data['quantity']
-                close_order.symbol = symbol_of_interest
-                close_order.user = request.user
+                close_order.related_open_order = OrderOpenPosition.objects.get(id=order_close_position_form.cleaned_data['open_position_id'])
                 close_order.save()
                 state_close_order_status = close_order_match_engine(close_order, request.user, symbol_of_interest)
             order_open_position_form = OrderOpenPositionForm(prefix='open_order')
