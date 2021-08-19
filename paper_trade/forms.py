@@ -13,7 +13,7 @@ class OrderForm(forms.ModelForm):
 class OrderOpenPositionForm(forms.ModelForm):
     class Meta:
         model = OrderOpenPosition
-        fields = ('input_price', 'quantity', 'direction','leverage','take_profit','stop_loss')
+        fields = ('input_price', 'initial_quantity', 'direction','leverage','take_profit','stop_loss')
 
 class OrderClosePositionForm(forms.ModelForm):
     open_position_id = forms.IntegerField(label='open_position_id', required=True)
