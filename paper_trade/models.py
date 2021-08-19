@@ -30,14 +30,14 @@ class OrderOpenPosition(models.Model):
     stop_loss = models.FloatField(blank=True, null=True)
 
     def __str__(self):
-        return str(self.id) + " --- " + self.symbol.symbol + "---initial quantity= " + str(self.initial_quantity) +  "---current quantity= " + str(self.current_quantity) +"---open price= " + str(self.matched_price) + " direction= " + self.get_direction_display()
+        return "ID="+str(self.id) + " --- " + self.symbol.symbol + "---direction= " + self.get_direction_display() + "---initial quantity= " + str(self.initial_quantity) +  "---current quantity= " + str(self.current_quantity) +"---open price= " + str(self.matched_price)
 
     @property
     def blocked_margin(self):
         return (self.current_quantity / self.initial_quantity) * self.initial_margin
 
     @property
-    def is_a_open_position(self):
+    def is_an_open_position(self):
         if self.result == 'S' and self.current_quantity > 0:
             return True
         else:
@@ -45,7 +45,7 @@ class OrderOpenPosition(models.Model):
 
     @property
     def unrealized_gain(self):
-        if self.is_a_open_position:
+        if self.is_an_open_position:
             if self.direction == OrderOpenPosition.LONG:
                 return profit_or_loss_calculator(self.symbol.bid,self.matched_price,self.current_quantity,self.symbol,self.direction)
             else:

@@ -19,7 +19,7 @@ def symbol_page(request,symbol):
     state_open_order_status = "insert your order and open a new position"
     state_close_order_status = "choose one of your existing positions and fully/partially close it "
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
-    open_positions = OpenPosition.objects.filter(user=request.user,symbol=symbol_of_interest)
+    open_positions = [obj for obj in OrderOpenPosition.objects.all() if obj.is_an_open_position]
 
     if request.method == 'POST':
         if 'open_order' in request.POST:
@@ -27,7 +27,7 @@ def symbol_page(request,symbol):
             if order_open_position_form.is_valid():
                 open_order = OrderOpenPosition()
                 open_order.input_price = order_open_position_form.cleaned_data['input_price']
-                open_order.quantity = order_open_position_form.cleaned_data['quantity']
+                open_order.initial_quantity = order_open_position_form.cleaned_data['initial_quantity']
                 open_order.direction = order_open_position_form.cleaned_data['direction']
                 open_order.leverage = order_open_position_form.cleaned_data['leverage']
                 open_order.take_profit = order_open_position_form.cleaned_data['take_profit']

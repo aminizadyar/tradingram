@@ -26,12 +26,16 @@
         {{ order_open_position_form.as_p }}
         <button name="open_order" type="submit">order</button>
     </form>
-
+        <br>
+        <h1>
+            Your Open Positions:
+        </h1>
+        <br>
     {% for open_position in open_positions %}
     {{ open_position }}
         <br>
     {% endfor %}
-
+    <br>
     <h1>
         {{ state_close_order_status }}
     </h1>
