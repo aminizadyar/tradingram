@@ -7,7 +7,6 @@ from social_media.forms import PostForm
 from api.models import Symbol
 from .models import OrderClosePosition,OrderOpenPosition
 from social_media.models import Post
-from social_media.logic import post_logic
 from .match_engine import open_order_match_engine, close_order_match_engine
 
 def markets_page(request):
@@ -24,7 +23,6 @@ def symbol_page(request,symbol):
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
     state_post_status = "What do you think about " + symbol_of_interest.symbol + "? Publist it!"
     open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest ,user = request.user) if obj.is_an_open_position]
-    your_posts = Post.objects.filter(related_symbol=symbol_of_interest,user=request.user)
     all_posts = Post.objects.filter(related_symbol=symbol_of_interest)
 
     if request.method == 'POST':
@@ -60,7 +58,13 @@ def symbol_page(request,symbol):
         elif 'post' in request.POST:
             post_form = PostForm(request.POST, prefix='post')
             if post_form.is_valid():
-                state_post_status = post_logic()
+                published_post = Post()
+                published_post.user = request.user
+                published_post.related_symbol = symbol_of_interest
+                published_post.text_content = post_form.cleaned_data['text_content']
+                published_post.symbol_initial_ask_price = symbol_of_interest.ask
+                published_post.symbol_initial_bid_price = symbol_of_interest.bid
+                published_post.save()
             order_open_position_form = OrderOpenPositionForm(prefix='open_order')
             order_close_position_form = OrderClosePositionForm(prefix='close_order')
     else:
@@ -77,7 +81,6 @@ def symbol_page(request,symbol):
                "state_close_order_status": state_close_order_status,
                "state_post_status": state_post_status,
                "user": request.user,
-               "your_posts": your_posts,
                "all_posts": all_posts,
                }
     return render(request, 'paper_trade/ticker_page.html', context)

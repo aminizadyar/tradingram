@@ -45,6 +45,35 @@
         {{ order_close_position_form.as_p }}
         <button name="close_order" type="submit">Close Position</button>
     </form>
+
+        <h1>
+                All published posts about {{ ticker.name }}
+
+        </h1>
+
+        <div>
+            {% for post in all_posts %}
+                <p>
+                Username : {{ post.user.username }}
+                </p>
+                <p>
+                Date : {{ post.created_datetime}}
+                </p>
+                <p>
+                Bid price at the moment of publish : {{ post.related_symbol.bid }}
+                </p><p>
+                Ask price at the moment of publish : {{ post.related_symbol.ask }}
+                </p>
+                <p>
+                Text : {{ post.text_content }}
+                </p>
+
+
+        <br>
+                {% endfor %}
+
+        </div>
+
         <h1>
         {{ state_post_status }}
     </h1>
