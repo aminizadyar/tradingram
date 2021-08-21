@@ -3,8 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from .forms import OrderOpenPositionForm
 from .forms import OrderClosePositionForm
+from social_media.forms import PostForm
 from api.models import Symbol
 from .models import OrderClosePosition,OrderOpenPosition
+from social_media.models import Post
+from social_media.logic import post_logic
 from .match_engine import open_order_match_engine, close_order_match_engine
 
 def markets_page(request):
@@ -19,7 +22,10 @@ def symbol_page(request,symbol):
     state_open_order_status = "Insert your order and open a new position"
     state_close_order_status = "Choose one of your existing positions and fully/partially close it "
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
-    open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest) if obj.is_an_open_position]
+    state_post_status = "What do you think about " + symbol_of_interest.symbol + "? Publist it!"
+    open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest ,user = request.user) if obj.is_an_open_position]
+    your_posts = Post.objects.filter(related_trade__symbol=symbol_of_interest,related_trade__user=request.user)
+    all_posts = Post.objects.filter(related_trade__symbol=symbol_of_interest)
 
     if request.method == 'POST':
         if 'open_order' in request.POST:
@@ -34,9 +40,11 @@ def symbol_page(request,symbol):
                 open_order.stop_loss = order_open_position_form.cleaned_data['stop_loss']
                 open_order.symbol = symbol_of_interest
                 open_order.user = request.user
+                open_order.signal = order_open_position_form.cleaned_data['signal_text']
                 open_order.save()
                 state_open_order_status = open_order_match_engine(open_order)
             order_close_position_form = OrderClosePositionForm(prefix='close_order')
+            post_form = PostForm(prefix='post')
         elif 'close_order' in request.POST:
             order_close_position_form = OrderClosePositionForm(request.POST, prefix='close_order')
             if order_close_position_form.is_valid():
@@ -47,17 +55,31 @@ def symbol_page(request,symbol):
                 close_order.save()
                 state_close_order_status = close_order_match_engine(close_order)
             order_open_position_form = OrderOpenPositionForm(prefix='open_order')
+            post_form = PostForm(prefix='post')
+
+        elif 'post' in request.POST:
+            post_form = PostForm(request.POST, prefix='post')
+            if post_form.is_valid():
+                state_post_status = post_logic()
+            order_open_position_form = OrderOpenPositionForm(prefix='open_order')
+            order_close_position_form = OrderClosePositionForm(prefix='close_order')
     else:
         order_open_position_form = OrderOpenPositionForm(prefix='open_order')
         order_close_position_form = OrderClosePositionForm(prefix='close_order')
+        post_form = PostForm(prefix='post')
 
     context = {"ticker": symbol_of_interest,
                "open_positions" : open_positions,
                "order_open_position_form": order_open_position_form,
                "order_close_position_form": order_close_position_form,
+               "post_form" : post_form,
                "state_open_order_status": state_open_order_status,
                "state_close_order_status": state_close_order_status,
-               "user": request.user}
+               "state_post_status": state_post_status,
+               "user": request.user,
+               "your_posts": your_posts,
+               "all_posts": all_posts,
+               }
     return render(request, 'paper_trade/ticker_page.html', context)
 
 

@@ -45,6 +45,15 @@
         {{ order_close_position_form.as_p }}
         <button name="close_order" type="submit">order</button>
     </form>
+        <h1>
+        {{ state_signal_post_status }}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ post_form.as_p }}
+        <button name="post" type="submit">order</button>
+    </form>
 
 
 
