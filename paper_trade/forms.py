@@ -3,10 +3,18 @@ from .models import OrderOpenPosition
 from .models import OrderClosePosition
 
 
+
 class OrderOpenPositionForm(forms.ModelForm):
+    leverage = forms.ChoiceField(label='Leverage',choices=[])
+
+    def __init__(self, CHOICES =None , *args, **kwargs):
+        super(OrderOpenPositionForm, self).__init__(*args, **kwargs)
+        if CHOICES:
+            self.fields['leverage'] = forms.ChoiceField(choices=CHOICES)
+
     class Meta:
         model = OrderOpenPosition
-        fields = ('input_price', 'initial_quantity', 'direction','leverage','take_profit','stop_loss','signal_text')
+        fields = ('input_price', 'initial_quantity' ,'direction','leverage' ,'take_profit','stop_loss','signal_text')
 
 class OrderClosePositionForm(forms.ModelForm):
     open_position_id = forms.IntegerField(label='Open_position_id', required=True)

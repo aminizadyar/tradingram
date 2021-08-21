@@ -1,7 +1,7 @@
 from django.db import models
 from api.models import Symbol
 from django.contrib.auth.models import User
-from django.core.validators import *
+from django.core.validators import MinValueValidator
 
 def profit_or_loss_calculator(current_price,open_price,quantity,symbol,direction):
     if symbol.market == 'FX':

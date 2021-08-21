@@ -32,3 +32,44 @@ def initial_margin_calculator(order,matched_price):
                 return (100000 * order_quantity) / (leverage * (Symbol.objects.get(symbol=symbol_indexed).ask))
     else:
         return (order_quantity * matched_price) / leverage
+
+def market_specific_leverages(market):
+    if market == 'FX':
+        CHOICES = (
+            (200, '200 : 1'),
+            (100, '100 : 1'),
+            (50, '50 : 1'),
+            (30, '30 : 1'),
+            (20, '20 : 1'),
+            (10, '10 : 1'),
+            (5, '5 : 1'),
+            (2, '2 : 1'),
+            (1, '1 : 1'),
+        )
+    elif market == 'ST':
+        CHOICES = (
+            (5, '5 : 1'),
+            (2, '2 : 1'),
+            (1, '1 : 1'),
+        )
+    elif market == 'CR':
+        CHOICES = (
+            (1, '1 : 1'),
+        )
+    elif market == 'CF':
+        CHOICES = (
+            (20, '20 : 1'),
+            (10, '10 : 1'),
+            (5, '5 : 1'),
+            (2, '2 : 1'),
+            (1, '1 : 1'),
+        )
+    elif market == 'IN':
+        CHOICES = (
+            (20, '20 : 1'),
+            (10, '10 : 1'),
+            (5, '5 : 1'),
+            (2, '2 : 1'),
+            (1, '1 : 1'),
+        )
+    return CHOICES
