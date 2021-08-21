@@ -11,9 +11,8 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/')
-    cash = models.FloatField(default=100000)
     free_margin = models.FloatField(default=100000)
-    leverage = models.IntegerField(default=200)
+
 
 
     def __str__(self):
