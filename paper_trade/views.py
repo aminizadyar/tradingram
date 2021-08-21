@@ -24,8 +24,8 @@ def symbol_page(request,symbol):
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
     state_post_status = "What do you think about " + symbol_of_interest.symbol + "? Publist it!"
     open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest ,user = request.user) if obj.is_an_open_position]
-    your_posts = Post.objects.filter(related_trade__symbol=symbol_of_interest,related_trade__user=request.user)
-    all_posts = Post.objects.filter(related_trade__symbol=symbol_of_interest)
+    your_posts = Post.objects.filter(related_symbol=symbol_of_interest,user=request.user)
+    all_posts = Post.objects.filter(related_symbol=symbol_of_interest)
 
     if request.method == 'POST':
         if 'open_order' in request.POST:

@@ -34,7 +34,7 @@ class Post(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
     text_content = models.TextField(null=True,blank=False)
-    likes = models.ManyToManyField(User)
+    likes = models.ManyToManyField(User,related_name='likes_relation')
     symbol_initial_bid_price = models.FloatField(null=True,blank=True)
     symbol_initial_ask_price = models.FloatField(null=True,blank=True)
 
