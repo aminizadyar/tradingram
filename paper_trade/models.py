@@ -1,6 +1,7 @@
 from django.db import models
 from api.models import Symbol
 from django.contrib.auth.models import User
+from django.core.validators import *
 
 def profit_or_loss_calculator(current_price,open_price,quantity,symbol,direction):
     if symbol.market == 'FX':
@@ -22,18 +23,19 @@ class OrderOpenPosition(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
-    input_price = models.FloatField(blank=False)
+    input_price = models.FloatField(blank=False,validators=[MinValueValidator(0,message="Enter a positive number")])
     matched_price = models.FloatField(blank=True,null=True)
-    initial_quantity = models.FloatField(blank=False)
+    # quantity validators can be improved
+    initial_quantity = models.FloatField(blank=False,validators=[MinValueValidator(0.000001,message="Enter a positive number")])
     current_quantity = models.FloatField(blank=True,null=True,default=0)
     initial_margin = models.FloatField(blank=True, null=True,default=0)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
     direction = models.IntegerField(choices=DIRECTION_CHOICES)
     result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')
-    leverage = models.IntegerField(default=1,blank=True)
-    take_profit = models.FloatField(blank=True, null= True)
-    stop_loss = models.FloatField(blank=True, null=True)
+    leverage = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(0,message="Enter a positive number")])
+    take_profit = models.FloatField(blank=True, null= True,validators=[MinValueValidator(0,message="Enter a positive number")])
+    stop_loss = models.FloatField(blank=True, null=True,validators=[MinValueValidator(0,message="Enter a positive number")])
     signal_text = models.TextField(blank=True,null=True)
 
     def __str__(self):
@@ -68,9 +70,10 @@ class OrderClosePosition(models.Model):
         ('F', 'Failure'),
     )
     related_open_order = models.ForeignKey(OrderOpenPosition, on_delete=models.CASCADE)
-    input_price = models.FloatField(blank=False)
+    input_price = models.FloatField(blank=False,validators=[MinValueValidator(0,message="Enter a positive number")])
     close_position_price = models.FloatField(blank=True,null=True)
-    quantity = models.FloatField(blank=False)
+    # quantity validators can be improved
+    quantity = models.FloatField(blank=False,validators=[MinValueValidator(0.000001,message="Enter a positive number")])
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
     result = models.CharField(max_length=1,choices=RESULT_CHOICES,default='F')
