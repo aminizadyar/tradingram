@@ -26,17 +26,16 @@ def symbol_page(request,symbol):
     open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest ,user = request.user) if obj.is_an_open_position]
     all_posts = Post.objects.filter(related_symbol=symbol_of_interest)
 
-    CHOICES = market_specific_leverages(symbol_of_interest.market)
+    leverage_choices = market_specific_leverages(symbol_of_interest.market)
 
     if request.method == 'POST':
         if 'open_order' in request.POST:
-            order_open_position_form = OrderOpenPositionForm(CHOICES,request.POST,prefix='open_order')
+            order_open_position_form = OrderOpenPositionForm(leverage_choices,request.POST,prefix='open_order')
             if order_open_position_form.is_valid():
                 open_order = OrderOpenPosition()
                 open_order.input_price = order_open_position_form.cleaned_data['input_price']
                 open_order.initial_quantity = order_open_position_form.cleaned_data['initial_quantity']
                 open_order.direction = order_open_position_form.cleaned_data['direction']
-                #open_order.leverage = int(request.POST.get('leverage'))
                 open_order.leverage = int(order_open_position_form.cleaned_data['leverage'])
                 open_order.take_profit = order_open_position_form.cleaned_data['take_profit']
                 open_order.stop_loss = order_open_position_form.cleaned_data['stop_loss']
@@ -56,7 +55,7 @@ def symbol_page(request,symbol):
                 close_order.related_open_order = OrderOpenPosition.objects.get(id=order_close_position_form.cleaned_data['open_position_id'])
                 close_order.save()
                 state_close_order_status = close_order_match_engine(close_order)
-            order_open_position_form = OrderOpenPositionForm(CHOICES,prefix='open_order')
+            order_open_position_form = OrderOpenPositionForm(leverage_choices,prefix='open_order')
             post_form = PostForm(prefix='post')
 
         elif 'post' in request.POST:
@@ -69,10 +68,10 @@ def symbol_page(request,symbol):
                 published_post.symbol_initial_ask_price = symbol_of_interest.ask
                 published_post.symbol_initial_bid_price = symbol_of_interest.bid
                 published_post.save()
-            order_open_position_form = OrderOpenPositionForm(CHOICES,prefix='open_order')
+            order_open_position_form = OrderOpenPositionForm(leverage_choices,prefix='open_order')
             order_close_position_form = OrderClosePositionForm(prefix='close_order')
     else:
-        order_open_position_form = OrderOpenPositionForm(CHOICES,prefix='open_order')
+        order_open_position_form = OrderOpenPositionForm(leverage_choices,prefix='open_order')
         order_close_position_form = OrderClosePositionForm(prefix='close_order')
         post_form = PostForm(prefix='post')
 

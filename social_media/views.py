@@ -5,8 +5,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.contrib import messages
-
-
+from django.http import HttpResponseRedirect
+from .models import Post
 
 @login_required
 @transaction.atomic
@@ -28,3 +28,12 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+def like_logic(request,post_id):
+    related_post = Post.objects.get(id=post_id)
+    if request.user in related_post.related_users():
+        related_post.likes.remove(request.user)
+    else:
+        related_post.likes.add(request.user)
+        related_post.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

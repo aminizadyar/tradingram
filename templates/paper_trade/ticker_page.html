@@ -67,6 +67,21 @@
                 <p>
                 Text : {{ post.text_content }}
                 </p>
+                <p>
+                Number of Likes : {{ post.number_of_likes }}
+                </p>
+
+                {% if user in post.related_users %}
+                    <a href="/likes/{{ post.id }}">Liked</a>
+                    {% else %}
+                    <a href="/likes/{{ post.id }}">Like</a>
+                {% endif %}
+
+
+
+
+
+
 
 
         <br>
