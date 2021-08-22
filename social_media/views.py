@@ -7,10 +7,21 @@ from django.db import transaction
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from .models import Post
+from django.contrib.auth.models import User
+
+
+def user_profile_page(request,username):
+    viewed_user=User.objects.get(username__iexact=username)
+    viewing_user = request.user
+    return render(request, 'social_media/user_profile_page.html', {
+        'viewed_user': viewed_user,
+        'viewing_user': viewing_user,
+    })
+
 
 @login_required
 @transaction.atomic
-def update_profile(request):
+def update_profile_page(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST,request.FILES, instance=request.user.profile)
@@ -18,13 +29,13 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, ('Your profile was successfully updated!'))
-            return redirect('markets_page')
+            return redirect('user_profile_page',username=request.user.username)
         else:
             messages.error(request, ('Please correct the error below.'))
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'social_media/update_profile.html', {
+    return render(request, 'social_media/update_profile_page.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })

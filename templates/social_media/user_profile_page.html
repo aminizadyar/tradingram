@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.username }}'s Profile</title>
+</head>
+<body>
+{% if viewed_user == viewing_user %}
+    <a href={% url 'update_profile_page' %}>Update Your Profile</a>
+    <br>
+{% endif %}
+    {{ viewed_user.username }}
+    <br>
+    {{ viewed_user.profile.bio }}
+</body>
+</html>
