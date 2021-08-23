@@ -71,10 +71,10 @@
                 Number of Likes : {{ post.number_of_likes }}
                 </p>
 
-                {% if user in post.like_related_users %}
-                    <a href="/unlike/{{ post.id }}">Liked</a>
+                {% if user in post.related_users %}
+                    <a href="/likes/{{ post.id }}">Liked</a>
                     {% else %}
-                    <a href="/like/{{ post.id }}">Like</a>
+                    <a href="/likes/{{ post.id }}">Like</a>
                 {% endif %}
 
 

@@ -62,6 +62,8 @@ class OrderOpenPosition(models.Model):
         else:
             return 0
 
+
+
 class OrderClosePosition(models.Model):
     RESULT_CHOICES = (
         ('S', 'Success'),
