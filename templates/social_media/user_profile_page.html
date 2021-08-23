@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ user.username }}'s Profile</title>
+    <title>{{ viewed_user.username }}'s Profile</title>
 </head>
 <body>
     {% if viewed_user == viewing_user %}
@@ -15,10 +15,15 @@
         {% endif %}
     {% endif %}
     <br>
-    {{ viewed_user.username }}
     <br>
-    {{ viewed_user.profile.bio }}
-
+    <p> Username : {{ viewed_user.username }} </p>
+    <br>
+    <img src="{{ viewed_user.profile.profile_picture.url}}" alt="Profile Picture" style="width:200px;height:200px;">
+    <p> Bio : {{ viewed_user.profile.bio }} </p>
+    <br>
+    <p> Number of Followers : {{ viewed_user.profile.number_of_followers }}</p>
+    <br>
+    <p> Number of Followings : {{ viewed_user.profile.number_of_followings }}</p>
 
 </body>
 </html>

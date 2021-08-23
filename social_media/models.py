@@ -12,14 +12,14 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/')
+    profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/',default='default.png')
     free_margin = models.FloatField(default=100000)
 
     def followers(self):
-        return UserFollow.objects.filter(followerd_user=self.user)
+        return UserFollow.objects.filter(followed_user=self.user)
 
     def number_of_followers(self):
-        return UserFollow.objects.filter(followerd_user=self.user).count()
+        return UserFollow.objects.filter(followed_user=self.user).count()
 
     def followings(self):
         return UserFollow.objects.filter(following_user=self.user)
