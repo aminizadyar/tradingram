@@ -6,16 +6,20 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Post
+from .models import Post , UserFollow
 from django.contrib.auth.models import User
 
 
 def user_profile_page(request,username):
     viewed_user=User.objects.get(username__iexact=username)
     viewing_user = request.user
+    is_followed = False
+    if UserFollow.objects.filter(following_user = viewing_user , followed_user =viewed_user).exists():
+        is_followed = True
     return render(request, 'social_media/user_profile_page.html', {
         'viewed_user': viewed_user,
         'viewing_user': viewing_user,
+        'is_followed': is_followed,
     })
 
 
@@ -42,9 +46,24 @@ def update_profile_page(request):
 
 def like_logic(request,post_id):
     related_post = Post.objects.get(id=post_id)
-    if request.user in related_post.related_users():
-        related_post.likes.remove(request.user)
-    else:
-        related_post.likes.add(request.user)
-        related_post.save()
+    related_post.likes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def unlike_logic(request,post_id):
+    related_post = Post.objects.get(id=post_id)
+    related_post.likes.remove(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def follow_logic(request,followed_user_username):
+    followed_user = User.objects.get(username__iexact=followed_user_username)
+    new_follow = UserFollow()
+    new_follow.followed_user = followed_user
+    new_follow.following_user = request.user
+    new_follow.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def unfollow_logic(request, followed_user_username):
+    followed_user = User.objects.get(username__iexact=followed_user_username)
+    UserFollow.objects.filter(following_user = request.user , followed_user = followed_user).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

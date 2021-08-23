@@ -15,6 +15,18 @@ class Profile(models.Model):
     profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/')
     free_margin = models.FloatField(default=100000)
 
+    def followers(self):
+        return UserFollow.objects.filter(followerd_user=self.user)
+
+    def number_of_followers(self):
+        return UserFollow.objects.filter(followerd_user=self.user).count()
+
+    def followings(self):
+        return UserFollow.objects.filter(following_user=self.user)
+
+    def number_of_followings(self):
+        return UserFollow.objects.filter(following_user=self.user).count()
+
     def __str__(self):
         return self.user.username
 
@@ -41,9 +53,23 @@ class Post(models.Model):
     def number_of_likes(self):
         return self.likes.count()
 
-    def related_users(self):
+    def like_related_users(self):
         return self.likes.all()
 
     def __str__(self):
         return self.user.username + "--" +self.related_symbol.symbol + "Post"
 
+class UserFollow(models.Model):
+    followed_user = models.ForeignKey(User, related_name="following",on_delete=models.CASCADE)
+    following_user = models.ForeignKey(User, related_name="followers",on_delete=models.CASCADE)
+    created_datetime = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['followed_user', 'following_user'], name="unique_followers")
+        ]
+
+        ordering = ['-created_datetime']
+
+    def __str__(self):
+        return self.following_user.username + " followed " +self.followed_user.username

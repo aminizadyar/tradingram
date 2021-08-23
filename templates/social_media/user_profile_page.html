@@ -5,12 +5,20 @@
     <title>{{ user.username }}'s Profile</title>
 </head>
 <body>
-{% if viewed_user == viewing_user %}
-    <a href={% url 'update_profile_page' %}>Update Your Profile</a>
+    {% if viewed_user == viewing_user %}
+        <a href={% url 'update_profile_page' %}>Update Your Profile</a>
+    {% else %}
+        {% if is_followed %}
+             <a href="unfollow/" >Unfollow</a>
+        {% else %}
+            <a href="follow/" >Follow</a>
+        {% endif %}
+    {% endif %}
     <br>
-{% endif %}
     {{ viewed_user.username }}
     <br>
     {{ viewed_user.profile.bio }}
+
+
 </body>
 </html>
