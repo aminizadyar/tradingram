@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from paper_trade.models import OrderOpenPosition
 from api.models import Symbol
+from paper_trade.models import OrderOpenPosition
 
 User._meta.get_field('email')._unique = True
 
@@ -26,6 +27,26 @@ class Profile(models.Model):
 
     def number_of_followings(self):
         return UserFollow.objects.filter(following_user=self.user).count()
+
+    def all_open_positions(self):
+        return OrderOpenPosition.objects.filter(user=self.user, result='S' , current_quantity__gt=0)
+
+    def blocked_margins(self):
+        sum_of_blocked_margins = 0
+        open_positions = self.all_open_positions()
+        for open_position in open_positions:
+            sum_of_blocked_margins += open_position.blocked_margin
+        return sum_of_blocked_margins
+
+    def unrealized_gains(self):
+        sum_of_unrealized_gains = 0
+        open_positions = self.all_open_positions()
+        for open_position in open_positions:
+            sum_of_unrealized_gains += open_position.unrealized_gain
+        return sum_of_unrealized_gains
+
+    def equity(self):
+        return self.free_margin + self.blocked_margins() + self.unrealized_gains()
 
     def __str__(self):
         return self.user.username
