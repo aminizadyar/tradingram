@@ -68,6 +68,7 @@ def unfollow_logic(request, followed_user_username):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def feed_page(request):
+
     if request.method == 'POST':
         post_form = PostForm(request.POST)
         if post_form.is_valid():

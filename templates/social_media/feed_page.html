@@ -5,11 +5,15 @@
     <title>Feed</title>
 </head>
 <body>
+    <h2>
+        What do you think about markets today? Publish it!
+    </h2>
     <form method="post"  enctype="multipart/form-data" >
         {% csrf_token %}
         {{ post_form.as_p }}
         <button type="submit">Publish</button>
     </form>
+
 
 </body>
 </html>
