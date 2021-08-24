@@ -15,8 +15,8 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(null=True,blank=True,upload_to='profile_pictures/',default='default.png')
     free_margin = models.FloatField(default=100000)
-    is_post_public = models.BooleanField(default=True)
-    is_signal_public = models.BooleanField(default=False)
+    is_post_public = models.BooleanField(default=True ,help_text="* What does this mean?  If it is active, all users, even those who havn't followed you will see your post. If not, only your followers will see them")
+    is_signal_public = models.BooleanField(default=False,help_text="* What does this mean?  If it is active, all users, even those who havn't followed you will see your signals. If not, only your followers will see them")
 
     def followers(self):
         return UserFollow.objects.filter(followed_user=self.user)
