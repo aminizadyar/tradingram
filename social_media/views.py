@@ -16,10 +16,24 @@ def user_profile_page(request,username):
     is_followed = False
     if UserFollow.objects.filter(following_user = viewing_user , followed_user =viewed_user).exists():
         is_followed = True
+    if request.method == 'POST':
+        post_form = PostForm(request.POST)
+        if post_form.is_valid():
+            post_obj = Post()
+            post_obj.user = request.user
+            post_obj.text_content = post_form.cleaned_data['text_content']
+            post_obj.save()
+            messages.success(request, ('Your post was successfully published!'))
+            return redirect('user_profile_page',username=request.user.username)
+        else:
+            messages.error(request, ('Please correct the error below.'))
+    else:
+        post_form = PostForm()
     return render(request, 'social_media/user_profile_page.html', {
         'viewed_user': viewed_user,
         'viewing_user': viewing_user,
         'is_followed': is_followed,
+        'post_form': post_form,
     })
 
 
