@@ -4,6 +4,7 @@ from .forms import SignInForm
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect
 
+LOGIN_URL='/#contact'
 
 def landing_page(request):
     logout(request)
