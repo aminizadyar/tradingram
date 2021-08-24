@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'landing_page',
     'api',
     'django_q',
-    'social_media'
+    'social_media',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,5 @@ Q_CLUSTER = {
     'retry': 120,
     "orm": "default",
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

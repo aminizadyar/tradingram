@@ -23,7 +23,7 @@ def symbol_page(request, symbol):
     state_open_order_status = "Insert your order and open a new position"
     state_close_order_status = "Choose one of your existing positions and fully/partially close it "
     symbol_of_interest = Symbol.objects.get(symbol__iexact=symbol)
-    state_post_status = "What do you think about " + symbol_of_interest.symbol + "? Publist it!"
+    state_post_status = "What do you think about " + symbol_of_interest.symbol + "? Publish  it!"
     open_positions = [obj for obj in OrderOpenPosition.objects.filter(symbol=symbol_of_interest, user=request.user) if
                       obj.is_an_open_position]
     all_posts = Post.objects.filter(related_symbol=symbol_of_interest)
