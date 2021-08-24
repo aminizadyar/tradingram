@@ -14,7 +14,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(null=True, blank=True, upload_to='profile_pictures/', default='profile_pictures/default.png')
+    profile_picture = models.ImageField(null=False, upload_to='profile_pictures/', default='profile_pictures/default.png')
     free_margin = models.FloatField(default=100000)
     is_post_public = models.BooleanField(default=True,
                                          help_text="* What does this mean?  If it is active, all users, even those who havn't followed you will see your post. If not, only your followers will see them")
