@@ -1,98 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
+{% block title %}
+    {{ ticker.name }}
+{% endblock %}
+
+{% block content %}
+    <div>
         <p> Name : {{ ticker.name }}</p>
-    <br>
-        <p> Symbol : {{ ticker.symbol }} </p>
-    <br>
-        <p> Bid Price : {{ ticker.bid }} </p>
-    <br>
-        <p> Ask Price : {{ ticker.ask }} </p>
-    <br>
-        <p>Username : {{ user.username }} </p>
-    <br>
-        <p>Your Free Margin : {{ user.profile.free_margin |floatformat:3 }} </p>
-    <br>
-        <h1>
-        {{ state_open_order_status }}
-    </h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ order_open_position_form.as_p }}
-        <button name="open_order" type="submit">Open Position</button>
-    </form>
         <br>
+        <p> Symbol : {{ ticker.symbol }} </p>
+        <br>
+        <p> Bid Price : {{ ticker.bid }} </p>
+        <br>
+        <p> Ask Price : {{ ticker.ask }} </p>
+        <br>
+        <p>Username : {{ user.username }} </p>
+        <br>
+        <p>Your Free Margin : {{ user.profile.free_margin |floatformat:3 }} </p>
+        <br>
+        <h1>
+            {{ state_open_order_status }}
+        </h1>
+        <!-- Open-->
+        <div class="input-group mb-3">
+            <form method="post">
+                {% csrf_token %}
+                <span class="input-group-text">Input Price</span>
+                <p>{{ order_open_position_form.input_price|as_crispy_field }}</p>
+                <span class="input-group-text">$</span>
+
+                <button name="open_order" type="submit">Open Position</button>
+            </form>
+        </div>
+        <!-- Open Positions-->
         <h1>
             Your Open Positions:
         </h1>
         <br>
-    {% for open_position in open_positions %}
-    {{ open_position }}
+        {% for open_position in open_positions %}
+            {{ open_position }}
+            <br>
+        {% endfor %}
         <br>
-    {% endfor %}
-    <br>
-    <h1>
-        {{ state_close_order_status }}
-    </h1>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ order_close_position_form.as_p }}
-        <button name="close_order" type="submit">Close Position</button>
-    </form>
+        <h1>
+            {{ state_close_order_status }}
+        </h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ order_close_position_form.as_p }}
+            <button name="close_order" type="submit">Close Position</button>
+        </form>
 
         <h1>
-                All published posts about {{ ticker.name }}
+            All published posts about {{ ticker.name }}
 
         </h1>
 
         <div>
             {% for post in all_posts %}
                 <p>
-                Username : {{ post.user.username }}
+                    Username : {{ post.user.username }}
                 </p>
                 <p>
-                Date : {{ post.created_datetime}}
+                    Date : {{ post.created_datetime }}
                 </p>
                 <p>
-                Bid price at the moment of publish : {{ post.related_symbol.bid }}
+                    Bid price at the moment of publish : {{ post.related_symbol.bid }}
                 </p><p>
                 Ask price at the moment of publish : {{ post.related_symbol.ask }}
+            </p>
+                <p>
+                    Text : {{ post.text_content }}
                 </p>
                 <p>
-                Text : {{ post.text_content }}
-                </p>
-                <p>
-                Number of Likes : {{ post.number_of_likes }}
+                    Number of Likes : {{ post.number_of_likes }}
                 </p>
 
                 {% if user in post.like_related_users %}
                     <a href="/unlike/{{ post.id }}">Liked</a>
-                    {% else %}
+                {% else %}
                     <a href="/like/{{ post.id }}">Like</a>
-                {% endif %}
-
-        <br>
-                {% endfor %}
+                {% endif %}]
+                <br>
+            {% endfor %}
 
         </div>
 
         <h1>
-        {{ state_post_status }}
-    </h1>
+            {{ state_post_status }}
+        </h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ post_form.as_p }}
-        <button name="post" type="submit">Post</button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            {{ post_form.as_p }}
+            <button name="post" type="submit">Post</button>
+        </form>
+    </div>
 
-
-
-</body>
-</html>
+{% endblock %}

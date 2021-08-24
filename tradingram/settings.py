@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'landing_page',
     'api',
     'django_q',
-    'social_media'
+    'social_media',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +127,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -133,8 +135,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 Q_CLUSTER = {
     "name": "tradingram",
     "ack_failures": True,
-    "max_attempts" : 1,
-    'timeout':40,
+    "max_attempts": 1,
+    'timeout': 40,
     'retry': 120,
     "orm": "default",
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

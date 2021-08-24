@@ -1,303 +1,316 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title >Tradingram</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="../../static/landing_page/assets/img/logo.png" />
-        <!-- Bootstrap Icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
-        <!-- SimpleLightbox plugin CSS-->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../../static/landing_page/css/styles.css" rel="stylesheet" />
-      	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Tradingram</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="../../static/landing_page/assets/img/logo.png"/>
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+          rel="stylesheet" type="text/css"/>
+    <!-- SimpleLightbox plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../../static/landing_page/css/styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
 
+        form {
+            border: 5px solid #f1f1f1;
+        }
 
+        input[type=text], input[type=password], input[type=email] {
+            width: 100%;
+            padding: 16px 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
 
+        .icon1 {
+            font-size: 110px;
+            display: flex;
+            justify-content: center;
+            color: #4286f4;
+        }
 
-         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        .buttonclass {
+            background-color: #4286f4;
+            color: white;
+            padding: 14px 0;
+            margin: 10px 0;
+            border: none;
+            cursor: grab;
+            width: 48%;
+        }
 
+        .formcontainer1 {
+            text-align: center;
+            margin: 24px 50px 12px;
+        }
 
-        <style>
-
-      form {
-      border: 5px solid #f1f1f1;
-      }
-      input[type=text], input[type=password] ,input[type=email] {
-      width: 100%;
-      padding: 16px 8px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      }
-      .icon1 {
-      font-size: 110px;
-      display: flex;
-      justify-content: center;
-      color: #4286f4;
-      }
-      .buttonclass {
-      background-color: #4286f4;
-      color: white;
-      padding: 14px 0;
-      margin: 10px 0;
-      border: none;
-      cursor: grab;
-      width: 48%;
-      }
-
-      .formcontainer1 {
-      text-align: center;
-      margin: 24px 50px 12px;
-      }
-      .container1 {
-      padding: 16px 0;
-      text-align:left;
-      }
+        .container1 {
+            padding: 16px 0;
+            text-align: left;
+        }
     </style>
 
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand fst-italic" href="#page-top"><img src="../../static/landing_page/assets/img/logo.png" alt="Logo" width="60" height="60" ></a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#services">Features</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Product</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Sign In</a></li>
-                    </ul>
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand fst-italic" href="#page-top"><img src="../../static/landing_page/assets/img/logo.png"
+                                                                 alt="Logo" width="60" height="60"></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#portfolio">Product</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Sign In</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container px-4 px-lg-5 h-100">
+        <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-end">
+                <h1 class="text-white font-weight-bold fst-italic">Ultimate social media for traders</h1>
+                <hr class="divider"/>
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+
+                <p class="text-white-75 mb-5">Safe, Entertaining, Profitable trading experience</p>
+                <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- About-->
+<section class="page-section bg-primary" id="about">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mt-0">We Try To Enrich The Trading Experience</h2>
+                <hr class="divider divider-light"/>
+                <p class="text-white-75 mb-4">Tradingram is a platform made by traders,for traders. we believe that
+                    trading has become an inseprable part of people's lives all over the world and there must be a
+                    social media dedicated to enriching the trading experience.</p> <br>
+                <a class="btn btn-light btn-xl" href={% url "signup_page" %}>Get Started!</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center mt-0">Our Main Features</h2>
+        <hr class="divider"/>
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
+                    <h3 class="h4 mb-2">Hedge Funds</h3>
+                    <p class="text-muted mb-0">Manage your own virtual hedge fund and grow your account</p>
                 </div>
             </div>
-        </nav>
-        <!-- Masthead-->
-        <header class="masthead">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold fst-italic">Ultimate social media for traders</h1>
-                        <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline">
-
-                        <p class="text-white-75 mb-5">Safe, Entertaining, Profitable trading experience</p>
-                        <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
-                    </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
+                    <h3 class="h4 mb-2">Algo Trading</h3>
+                    <p class="text-muted mb-0">Create sophisticated trading strategies with just a few clicks</p>
                 </div>
             </div>
-        </header>
-        <!-- About-->
-        <section class="page-section bg-primary" id="about">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8 text-center">
-                        <h2 class="text-white mt-0">We Try To Enrich The Trading Experience</h2>
-                        <hr class="divider divider-light" />
-                        <p class="text-white-75 mb-4">Tradingram is a platform made by traders,for traders. we believe that trading has become an inseprable part of people's lives all over the world and there must be a social media dedicated to enriching the trading experience.</p> <br>
-                        <a class="btn btn-light btn-xl" href={% url "signup_page" %}>Get Started!</a>
-                    </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
+                    <h3 class="h4 mb-2">Certified Traders</h3>
+                    <p class="text-muted mb-0">Access the trading ideas generated by certified traders</p>
                 </div>
             </div>
-        </section>
-        <!-- Services-->
-        <section class="page-section" id="services">
-            <div class="container px-4 px-lg-5">
-                <h2 class="text-center mt-0">Our Main Features</h2>
-                <hr class="divider" />
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Hedge Funds</h3>
-                            <p class="text-muted mb-0">Manage your own virtual hedge fund and grow your account</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Algo Trading</h3>
-                            <p class="text-muted mb-0">Create sophisticated trading strategies with just a few clicks</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Certified Traders</h3>
-                            <p class="text-muted mb-0">Access the trading ideas generated by certified traders</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Community</h3>
-                            <p class="text-muted mb-0">Have social interactions, enjoy trading games and contests</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Portfolio-->
-        <div id="portfolio">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/1.jpg" >
-                            <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-name">Create trading strategies</div>
-
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/2.jpg" >
-                            <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/2.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-
-                              <div class="project-name">Backtest your strategies</div>
-
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/3.jpg" >
-                            <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/3.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-
-                              <div class="project-name">Deploy your strategies</div>
-
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/4.jpg" >
-                            <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/4.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-
-                              <div class="project-name">Social media feed</div>
-
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/5.jpg" >
-                            <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/5.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-name">Post your trades</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/6.jpg">
-                            <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/6.jpg" alt="..." />
-                            <div class="portfolio-box-caption p-3">
-                                <div class="project-name">Check other traders trading profile</div>
-                            </div>
-                        </a>
-                    </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+                    <h3 class="h4 mb-2">Community</h3>
+                    <p class="text-muted mb-0">Have social interactions, enjoy trading games and contests</p>
                 </div>
             </div>
         </div>
-        <!-- Call to action-->
-        <section class="page-section bg-dark text-white">
-            <div class="container px-4 px-lg-5 text-center">
-                <h2 class="mb-4">For More Information Contact Us</h2>
-                <a class="btn btn-light btn-xl" href="mailto:info@tradingram.net">Send Email</a>
+    </div>
+</section>
+<!-- Portfolio-->
+<div id="portfolio">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/1.jpg">
+                    <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/1.jpg"
+                         alt="..."/>
+                    <div class="portfolio-box-caption">
+                        <div class="project-name">Create trading strategies</div>
+
+                    </div>
+                </a>
             </div>
-        </section>
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">Let's Sign In Now!</h2>
-                        <hr class="divider" />
-                        <p class="text-muted mb-5">Sign In to your account and have a rich trading experience</p>
-                    </div>
-                </div>
-                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
-                    <div class="col-lg-6">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <div class="icon1">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                              <div class="formcontainer1">
-                              <div class="container1">
-                                <p>
-                                        {{ form.username.label_tag }}<br>
-                                        {{ form.username }}
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/2.jpg">
+                    <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/2.jpg"
+                         alt="..."/>
+                    <div class="portfolio-box-caption">
 
-                                        {% for error in form.username.errors %}
-                                          <p style="color: red">{{ error }}</p>
-                                        {% endfor %}
-                                </p>
-
-                              <p>
-                                        {{ form.password.label_tag }}<br>
-                                        {{ form.password }}
-
-                                        {% for error in form.password.errors %}
-                                          <p style="color: red">{{ error }}</p>
-                                        {% endfor %}
-                              </p>
-
-                                  <p style="color:red;">{{ state }}</p>
-
-                              </div>
-                              <button class="buttonclass" type="submit"><strong>SIGN IN</strong></button>
-                              <br>
-                              <a href={% url "signup_page" %}>Don't you have an account? Let's sign up now!</a>
-                        </form>
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
+                        <div class="project-name">Backtest your strategies</div>
 
                     </div>
-                </div>
-              <!--
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
-                        <i class="fa fa-telegram  fs-2 ">   </i>
-                      <div> <h6>@tradingram_info</h6> </div>
-                    </div>
-                </div>
-				 -->
+                </a>
             </div>
-        </section>
-        <!-- Footer-->
-        <footer class="bg-light py-5">
-            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - Tradingram</div></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- SimpleLightbox plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="../../static/landing_page/js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/3.jpg">
+                    <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/fullsize/3.jpg"
+                         alt="..."/>
+                    <div class="portfolio-box-caption">
+
+                        <div class="project-name">Deploy your strategies</div>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/4.jpg">
+                    <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/4.jpg"
+                         alt="..."/>
+                    <div class="portfolio-box-caption">
+
+                        <div class="project-name">Social media feed</div>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/5.jpg">
+                    <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/5.jpg"
+                         alt="..."/>
+                    <div class="portfolio-box-caption">
+                        <div class="project-name">Post your trades</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="../../static/landing_page/assets/img/portfolio/fullsize/6.jpg">
+                    <img class="img-fluid" src="../../static/landing_page/assets/img/portfolio/thumbnails/6.jpg"
+                         alt="..."/>
+                    <div class="portfolio-box-caption p-3">
+                        <div class="project-name">Check other traders trading profile</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Call to action-->
+<section class="page-section bg-dark text-white">
+    <div class="container px-4 px-lg-5 text-center">
+        <h2 class="mb-4">For More Information Contact Us</h2>
+        <a class="btn btn-light btn-xl" href="mailto:info@tradingram.net">Send Email</a>
+    </div>
+</section>
+<!-- Contact-->
+<section class="page-section" id="contact">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Let's Sign In Now!</h2>
+                <hr class="divider"/>
+                <p class="text-muted mb-5">Sign In to your account and have a rich trading experience</p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="icon1">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="formcontainer1">
+                        <div class="container1">
+                            <p>
+                                {{ form.username.label_tag }}<br>
+                                {{ form.username }}
+
+                                {% for error in form.username.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                            </p>
+
+                            <p>
+                                {{ form.password.label_tag }}<br>
+                                {{ form.password }}
+
+                                {% for error in form.password.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endfor %}
+                            </p>
+
+                            <p style="color:red;">{{ state }}</p>
+
+                        </div>
+                        <button class="buttonclass" type="submit"><strong>SIGN IN</strong></button>
+                        <br>
+                        <a href={% url "signup_page" %}>Don't you have an account? Let's sign up now!</a>
+                </form>
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- * * SB Forms Contact Form * *-->
+                <!-- * * * * * * * * * * * * * * *-->
+                <!-- This form is pre-integrated with SB Forms.-->
+                <!-- To make this form functional, sign up at-->
+                <!-- https://startbootstrap.com/solution/contact-forms-->
+                <!-- to get an API token!-->
+
+            </div>
+        </div>
+        <!--
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+              <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                  <i class="fa fa-telegram  fs-2 ">   </i>
+                <div> <h6>@tradingram_info</h6> </div>
+              </div>
+          </div>
+           -->
+    </div>
+</section>
+<!-- Footer-->
+<footer class="bg-light py-5">
+    <div class="container px-4 px-lg-5">
+        <div class="small text-center text-muted">Copyright &copy; 2021 - Tradingram</div>
+    </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SimpleLightbox plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+<!-- Core theme JS-->
+<script src="../../static/landing_page/js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
 </html>
