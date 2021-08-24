@@ -1,12 +1,11 @@
 from django.shortcuts import render
-from .forms import UserForm
-from .forms import ProfileForm
+from .forms import UserForm, ProfileForm, PostForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Post , UserFollow
+from .models import Post, UserFollow
 from django.contrib.auth.models import User
 
 
@@ -67,3 +66,22 @@ def unfollow_logic(request, followed_user_username):
     followed_user = User.objects.get(username__iexact=followed_user_username)
     UserFollow.objects.filter(following_user = request.user , followed_user = followed_user).delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def feed_page(request):
+    if request.method == 'POST':
+        post_form = PostForm(request.POST)
+        if post_form.is_valid():
+            post_obj = Post()
+            post_obj.user = request.user
+            post_obj.text_content = post_form.cleaned_data['text_content']
+            post_obj.save()
+            messages.success(request, ('Your post was successfully published!'))
+            return redirect('feed_page')
+        else:
+            messages.error(request, ('Please correct the error below.'))
+    else:
+        post_form = PostForm()
+
+    return render(request, 'social_media/feed_page.html', {
+        'post_form': post_form,
+    })
