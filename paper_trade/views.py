@@ -9,15 +9,16 @@ from .models import OrderClosePosition, OrderOpenPosition
 from social_media.models import Post
 from .match_engine import open_order_match_engine, close_order_match_engine
 from .calculator import market_specific_leverages
+from landing_page.views import LOGIN_URL
 
-
+@login_required(login_url=LOGIN_URL)
 def markets_page(request):
     qs = Symbol.objects.all()
     context = {'qs': qs}
     return render(request, 'paper_trade/markets_page.html', context)
 
 
-@login_required
+@login_required(login_url=LOGIN_URL)
 @transaction.atomic
 def symbol_page(request, symbol):
     state_open_order_status = "Insert your order and open a new position"
