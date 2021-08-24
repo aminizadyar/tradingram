@@ -38,12 +38,17 @@ class OrderOpenPosition(models.Model):
     stop_loss = models.FloatField(blank=True, null=True,validators=[MinValueValidator(0,message="Enter a positive number")])
     signal_text = models.TextField(blank=True,null=True)
 
+    class Meta:
+        ordering = ['-created_datetime']
     def __str__(self):
         return "ID="+str(self.id) + " --- " + self.symbol.symbol + "---direction= " + self.get_direction_display() + "---initial quantity= " + str(self.initial_quantity) +  "---current quantity= " + str(self.current_quantity) +"---open price= " + str(self.matched_price) + '--blocked margin=' + str(self.blocked_margin) + '--unrealized gain='+str(self.unrealized_gain)
 
     @property
     def blocked_margin(self):
-        return (self.current_quantity / self.initial_quantity) * self.initial_margin
+        if self.initial_margin == 0 or self.initial_quantity == 0:
+            return 0
+        else:
+            return (self.current_quantity / self.initial_quantity) * self.initial_margin
 
     @property
     def is_an_open_position(self):

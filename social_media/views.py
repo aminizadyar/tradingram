@@ -6,8 +6,9 @@ from django.db import transaction
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from .models import Post, UserFollow
+from paper_trade.models import OrderOpenPosition
 from django.contrib.auth.models import User
-
+import datetime
 
 def user_profile_page(request,username):
     viewed_user=User.objects.get(username__iexact=username)
@@ -68,6 +69,9 @@ def unfollow_logic(request, followed_user_username):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def feed_page(request):
+    time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(days=1)
+    followings_list = [obj.followed_user for obj in request.user.profile.followings()]
+    followings_signals = OrderOpenPosition.objects.filter(user__in=followings_list,result='S',created_datetime__gte=time_24_hours_ago)
 
     if request.method == 'POST':
         post_form = PostForm(request.POST)
@@ -85,4 +89,5 @@ def feed_page(request):
 
     return render(request, 'social_media/feed_page.html', {
         'post_form': post_form,
+        'followings_signals': followings_signals,
     })
