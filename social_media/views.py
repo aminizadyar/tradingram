@@ -73,7 +73,8 @@ def feed_page(request):
     followings_list = [obj.followed_user for obj in request.user.profile.followings()]
     followings_signals = OrderOpenPosition.objects.filter(user__in=followings_list,result='S',created_datetime__gte=time_24_hours_ago)
     all_signals = OrderOpenPosition.objects.filter(result='S',created_datetime__gte=time_24_hours_ago,user__profile__is_signal_public=True)
-
+    followings_posts = Post.objects.filter(user__in=followings_list)
+    all_posts = Post.objects.filter(user__profile__is_post_public=True)
     if request.method == 'POST':
         post_form = PostForm(request.POST)
         if post_form.is_valid():
@@ -92,4 +93,7 @@ def feed_page(request):
         'post_form': post_form,
         'followings_signals': followings_signals,
         'all_signals': all_signals,
+        'followings_posts': followings_posts,
+        'all_posts': all_posts,
+        'user': request.user,
     })

@@ -14,20 +14,105 @@
         <button type="submit">Publish</button>
     </form>
     <br>
-    <h1>signals published by your followers in the last 24 hours</h1>
+    <h1>Signals published by people you follow in the last 24 hours</h1>
     {% for signal in followings_signals %}
         <ul>
-        <p>{{ signal.user.username }} has taken a {{ signal.get_direction_display }} position in {{ signal.symbol.symbol }} </p>
-        <p>Signal Text :{{ signal.signal_text }}</p>
+        <p><a href="/{{ signal.user.username }}">{{ signal.user.username }}</a> has taken a {{ signal.get_direction_display }} position in <a href="/markets/{{ signal.symbol.symbol }}">{{ signal.symbol.symbol }}</a> </p>
+        <p>Signal's Text :{{ signal.signal_text }}</p>
         <br>
         </ul>
     {% endfor %}
 
+    <br>
     <h1>All public signals published in the last 24 hours  </h1>
     {% for signal in all_signals %}
         <ul>
-        <p>{{ signal.user.username }} has taken a {{ signal.get_direction_display }} position in {{ signal.symbol.symbol }} </p>
-        <p>Signal Text :{{ signal.signal_text }}</p>
+        <p><a href="/{{ signal.user.username }}">{{ signal.user.username }}</a> has taken a {{ signal.get_direction_display }} position in <a href="/markets/{{ signal.symbol.symbol }}">{{ signal.symbol.symbol }}</a> </p>
+        <p>Signal's Text :{{ signal.signal_text }}</p>
+        <br>
+        </ul>
+    {% endfor %}
+
+    <br>
+     <h1>Posts published by people who you follow</h1>
+    {% for post in followings_posts %}
+        <ul>
+        <p>
+                Username : <a href="/{{ post.user.username }}">{{ post.user.username }}</a>
+                </p>
+                <p>
+                Date : {{ post.created_datetime}}
+                </p>
+                {% ifnotequal post.related_symbol None %}
+                <p>
+                Symbol : <a href="/markets/{{ post.related_symbol}}">{{ post.related_symbol}}</a>
+                </p>
+                <p>
+                Bid price at the moment of publish : {{ post.related_symbol.bid }}
+                </p><p>
+                Ask price at the moment of publish : {{ post.related_symbol.ask }}
+                </p>
+                {% else %}
+                 <p>
+                     Symbol : None
+                 </p>
+                {% endifnotequal %}
+
+                <p>
+                Text : {{ post.text_content }}
+                </p>
+                <p>
+                Number of Likes : {{ post.number_of_likes }}
+                </p>
+
+                {% if user in post.like_related_users %}
+                    <a href="/unlike/{{ post.id }}">Liked</a>
+                    {% else %}
+                    <a href="/like/{{ post.id }}">Like</a>
+                {% endif %}
+        <br>
+        <br>
+        </ul>
+    {% endfor %}
+
+    <br>
+    <h1>All Posts published</h1>
+    {% for post in all_posts %}
+        <ul>
+        <p>
+                Username : <a href="/{{ post.user.username }}">{{ post.user.username }}</a>
+                </p>
+                <p>
+                Date : {{ post.created_datetime}}
+                </p>
+                {% ifnotequal post.related_symbol None %}
+                <p>
+                Symbol : <a href="/markets/{{ post.related_symbol}}">{{ post.related_symbol}}</a>
+                </p>
+                <p>
+                Bid price at the moment of publish : {{ post.related_symbol.bid }}
+                </p><p>
+                Ask price at the moment of publish : {{ post.related_symbol.ask }}
+                </p>
+                {% else %}
+                 <p>
+                     Symbol : None
+                 </p>
+                {% endifnotequal %}
+
+                <p>
+                Text : {{ post.text_content }}
+                </p>
+                <p>
+                Number of Likes : {{ post.number_of_likes }}
+                </p>
+
+                {% if user in post.like_related_users %}
+                    <a href="/unlike/{{ post.id }}">Liked</a>
+                    {% else %}
+                    <a href="/like/{{ post.id }}">Like</a>
+                {% endif %}
+        <br>
         <br>
         </ul>
     {% endfor %}
