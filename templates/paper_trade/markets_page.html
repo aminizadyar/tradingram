@@ -13,7 +13,7 @@
 </nav>
 <ul class="list-group">
     {% for symbol in qs %}
-        <li class="list-group-item"><span class="badge bg-secondary">{{ symbol.name }}</span> <span
+        <li class="list-group-item"><span class="badge bg-secondary"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span> <span
                 class="badge bg-success">Last Price</span> <span
                 class="badge bg-info text-dark">{{ symbol.last_price }}</span></li>
     {% endfor %}
