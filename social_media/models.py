@@ -64,7 +64,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Post(models.Model):
-    related_symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE,primary_key=False)
+    related_symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE,primary_key=False, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,primary_key=False)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
@@ -80,7 +80,7 @@ class Post(models.Model):
         return self.likes.all()
 
     def __str__(self):
-        return self.user.username + "--" +self.related_symbol.symbol + "Post"
+        return self.user.username +  " Post"
 
 class UserFollow(models.Model):
     followed_user = models.ForeignKey(User, related_name="following",on_delete=models.CASCADE)
