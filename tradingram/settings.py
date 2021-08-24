@@ -125,7 +125,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -133,8 +133,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 Q_CLUSTER = {
     "name": "tradingram",
     "ack_failures": True,
-    "max_attempts" : 1,
-    'timeout':40,
+    "max_attempts": 1,
+    'timeout': 40,
     'retry': 120,
     "orm": "default",
 }
