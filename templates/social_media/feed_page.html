@@ -14,12 +14,23 @@
         <button type="submit">Publish</button>
     </form>
     <br>
-    <h1>Published Signals by your followers</h1>
+    <h1>signals published by your followers in the last 24 hours</h1>
     {% for signal in followings_signals %}
         <ul>
         <p>{{ signal.user.username }} has taken a {{ signal.get_direction_display }} position in {{ signal.symbol.symbol }} </p>
         <p>Signal Text :{{ signal.signal_text }}</p>
+        <br>
         </ul>
     {% endfor %}
+
+    <h1>All public signals published in the last 24 hours  </h1>
+    {% for signal in all_signals %}
+        <ul>
+        <p>{{ signal.user.username }} has taken a {{ signal.get_direction_display }} position in {{ signal.symbol.symbol }} </p>
+        <p>Signal Text :{{ signal.signal_text }}</p>
+        <br>
+        </ul>
+    {% endfor %}
+
 </body>
 </html>
