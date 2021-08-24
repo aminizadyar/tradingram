@@ -30,6 +30,9 @@
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#services">Features</a></li>
                 <li class="nav-item"><a class="nav-link" href="#portfolio">Product</a></li>
+                {% if user.profile.profile_picture %}
+                    {{ user.profile.profile_picture.url }}
+                {% endif %} 
                 <li class="nav-item"><a class="nav-link" href="#contact">Sign In</a></li>
             </ul>
         </div>
