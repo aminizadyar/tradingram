@@ -19,6 +19,9 @@
             padding-top: 100px;
         }
     </style>
+    {% block extra_head %}
+
+    {% endblock %}
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -45,7 +48,9 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="/{{ user.username }}">My Profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'update_profile_page' %}">Edit Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="/">Log Out</a></li>
                     </ul>
                 </li>
