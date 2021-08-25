@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import symbol_page
-from .views import markets_page
+from .views import *
 
 urlpatterns = [
     path('markets', markets_page, name='markets_page'),
