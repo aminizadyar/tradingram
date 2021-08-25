@@ -40,7 +40,13 @@
         </h1>
         <br>
         {% for open_position in open_positions %}
-            {{ open_position }}
+            {{ open_position.symbol }}
+            {{ open_position.direction }}
+            {{ open_position.initial_quantity }}
+            {{ open_position.current_quantity }}
+            {{ open_position.input_price }}
+            {{ open_position.blocked_margin }}
+            {{ open_position.unrealized_gain }}
             <br>
         {% endfor %}
         <br>
