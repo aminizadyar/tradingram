@@ -60,7 +60,7 @@
         {% for open_position in open_positions %}
             <tr>
                 <td>{{ open_position.symbol }}</td>
-                <td>{{ open_position.direction }}</td>
+                <td>{{ open_position.get_direction_display }}</td>
                 <td>{{ open_position.initial_quantity }}</td>
                 <td>{{ open_position.current_quantity }}</td>
                 <td>{{ open_position.input_price }}</td>
