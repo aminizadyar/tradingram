@@ -43,7 +43,45 @@
         <h1>
             Your Open Positions:
         </h1>
-        <br>
+        <!-- Open Positions Table-->
+    <table id="tableOpenPositions" class="table table-striped table-bordered table-sm" cellspacing="0" width="90%">
+        <thead>
+        <tr>
+            <th class="th-sm">Symbol</th>
+            <th class="th-sm">Direction</th>
+            <th class="th-sm">Initial Qty.</th>
+            <th class="th-sm">Current Qty.</th>
+            <th class="th-sm">Input Price</th>
+            <th class="th-sm">Blocked Margin</th>
+            <th class="th-sm">Unrealized Gain</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for open_position in open_positions %}
+            <tr>
+                <td>{{ open_position.symbol }}</td>
+                <td>{{ open_position.direction }}</td>
+                <td>{{ open_position.initial_quantity }}</td>
+                <td>{{ open_position.current_quantity }}</td>
+                <td>{{ open_position.input_price }}</td>
+                <td>{{ open_position.blocked_margin }}</td>
+                <td>{{ open_position.unrealized_gain }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Symbol</th>
+            <th>Direction</th>
+            <th>Initial Qty.</th>
+            <th>Current Qty.</th>
+            <th>Input Price</th>
+            <th>Blocked Margin</th>
+            <th>Unrealized Gain</th>
+        </tr>
+        </tfoot>
+    </table>
 
         <br>
         <h1>
@@ -100,45 +138,7 @@
             <button name="post" type="submit">Post</button>
         </form>
     </div>
-    <!-- Open Positions Table-->
-    <table id="tableOpenPositions" class="table table-striped table-bordered table-sm" cellspacing="0" width="90%">
-        <thead>
-        <tr>
-            <th class="th-sm">Symbol</th>
-            <th class="th-sm">Direction</th>
-            <th class="th-sm">Initial Qty.</th>
-            <th class="th-sm">Current Qty.</th>
-            <th class="th-sm">Input Price</th>
-            <th class="th-sm">Blocked Margin</th>
-            <th class="th-sm">Unrealized Gain</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for open_position in open_positions %}
-            <tr>
-                <td>{{ open_position.symbol }}</td>
-                <td>{{ open_position.direction }}</td>
-                <td>{{ open_position.initial_quantity }}</td>
-                <td>{{ open_position.current_quantity }}</td>
-                <td>{{ open_position.input_price }}</td>
-                <td>{{ open_position.blocked_margin }}</td>
-                <td>{{ open_position.unrealized_gain }}</td>
-            </tr>
-        {% endfor %}
 
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Symbol</th>
-            <th>Direction</th>
-            <th>Initial Qty.</th>
-            <th>Current Qty.</th>
-            <th>Input Price</th>
-            <th>Blocked Margin</th>
-            <th>Unrealized Gain</th>
-        </tr>
-        </tfoot>
-    </table>
 {% endblock %}
 {% block extra_scripts %}
     <script src="{% static 'paper_trade/datatable.js' %}"></script>
