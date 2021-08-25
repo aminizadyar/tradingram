@@ -20,12 +20,6 @@ def markets_page(request):
 
 @login_required(login_url=LOGIN_URL)
 @transaction.atomic
-def close_position(request, position_id):
-    state_open_order_status = "Insert your order and open a new position"
-
-
-@login_required(login_url=LOGIN_URL)
-@transaction.atomic
 def symbol_page(request, symbol):
     state_open_order_status = "Insert your order and open a new position"
     state_close_order_status = "Choose one of your existing positions and fully/partially close it "
