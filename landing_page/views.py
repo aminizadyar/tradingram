@@ -36,7 +36,13 @@ def signup_page(request):
         if form.is_valid():
             username = form.cleaned_data.get('username').lower()
             raw_password = form.cleaned_data.get('password1')
-            form.save()
+            new_user = User()
+            new_user.set_password(raw_password)
+            new_user.username = username
+            new_user.email = form.cleaned_data.get('email').lower()
+            new_user.first_name = form.cleaned_data.get('first_name')
+            new_user.last_name = form.cleaned_data.get('last_name')
+            new_user.save()
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('markets_page')
