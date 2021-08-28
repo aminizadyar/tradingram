@@ -10,7 +10,7 @@ def landing_page(request):
     logout(request)
     if request.method == 'POST':
         form = SignInForm(request.POST)
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         raw_password = request.POST.get('password')
         user = authenticate(username=username, password=raw_password)
         if user:
@@ -34,7 +34,7 @@ def signup_page(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username').lower()
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
