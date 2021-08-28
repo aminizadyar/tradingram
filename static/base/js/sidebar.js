@@ -20,6 +20,7 @@
       	else {
 		$('.searchbar_base').css('margin-inline-start', "250px");
 			}
+
   });
 
 })(jQuery);
