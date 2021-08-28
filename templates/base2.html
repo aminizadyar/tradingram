@@ -54,6 +54,14 @@
     color:orangered;
 }
 
+.searchbar_base{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 110px;
+    margin-inline-end: 0px;
+    margin-top: 10;
+}
+
     </style>
 
     {% block extra_head %}
@@ -123,6 +131,10 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <p class="equity">  Equity: {{ user.profile.equity|floatformat:3 }}</p>
+            <form class="form-inline searchbar_base">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Traders or Tickers" aria-label="Search">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
 
               <ul class="nav navbar-nav ml-auto">
 
