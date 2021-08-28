@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Feed</title>
-</head>
-<body>
+{% extends 'base2.html' %}
+{% block content %}
+
+    {% block title %}
+    Feed
+    {% endblock %}
+
     <h2>
         What do you think about markets today? Publish it!
     </h2>
@@ -117,5 +117,5 @@
         </ul>
     {% endfor %}
 
-</body>
-</html>
+
+{% endblock %}
