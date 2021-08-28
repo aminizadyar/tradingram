@@ -13,8 +13,13 @@
 	fullHeight();
 
 	$('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active');
-      $("#searchbar_base").attr("margin-inline-start","1100");
+		$('#sidebar').toggleClass('active');
+		if($('.searchbar_base').css('margin-inline-start') == "250px"){ // or this.value == 'volvo'
+      		$('.searchbar_base').css('margin-inline-start',"110px");
+			}
+      	else {
+		$('.searchbar_base').css('margin-inline-start', "250px");
+			}
   });
 
 })(jQuery);
