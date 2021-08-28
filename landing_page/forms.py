@@ -16,3 +16,9 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        email = self.cleaned_data.get('email')
+        if username and User.objects.filter(username__iexact=username).exclude(email=email).count():
+            raise forms.ValidationError('This username has already been taken!')
+        return username

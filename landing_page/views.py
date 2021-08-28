@@ -3,6 +3,7 @@ from .forms import SignUpForm
 from .forms import SignInForm
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
 
 LOGIN_URL='/#contact'
 
@@ -33,9 +34,9 @@ def signup_page(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data.get('username').lower()
             raw_password = form.cleaned_data.get('password1')
+            form.save()
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('markets_page')
