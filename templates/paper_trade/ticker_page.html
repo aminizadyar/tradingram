@@ -15,7 +15,7 @@
     <div>
 
 
-        ABCD
+
         <p> Name : {{ ticker.name }}</p>
         <br>
         <p> Symbol : {{ ticker.symbol }} </p>
@@ -32,16 +32,13 @@
             {{ state_open_order_status }}
         </h1>
         <!-- Open-->
-        <div class="input-group mb-3">
-            <form method="post">
-                {% csrf_token %}
-                <span class="input-group-text">Input Price</span>
-                <p>{{ order_open_position_form.input_price|as_crispy_field }}</p>
-                <span class="input-group-text">$</span>
 
-                <button name="open_order" type="submit">Open Position</button>
-            </form>
-        </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ order_open_position_form.as_p }}
+        <button name="open_order" type="submit">order</button>
+    </form>
+
         <!-- Open Positions-->
         <h1>
             Your Open Positions:
@@ -128,7 +125,7 @@
                     <a href="/unlike/{{ post.id }}">Liked</a>
                 {% else %}
                     <a href="/like/{{ post.id }}">Like</a>
-                {% endif %}]
+                {% endif %}
                 <br>
             {% endfor %}
 
