@@ -20,11 +20,13 @@ class SignUpForm(UserCreationForm):
         username = self.cleaned_data.get('username')
         if username and User.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError('This username has already been taken!')
-        return username
+        if username and username.lower() in ['feed', 'markets', 'update-profile']:
+            raise forms.ValidationError("You can't take this username")
+        return username.lower()
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email and User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError('This email has already been taken!')
-        return email
+        return email.lower()
 
