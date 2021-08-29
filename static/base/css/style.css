@@ -3417,7 +3417,7 @@ input[type="button"].btn-block {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  text-align: center; }
+  text-aliFgn: center; }
 
 .tab-content > .tab-pane {
   display: none; }
@@ -8213,6 +8213,7 @@ h1, h2, h3, h4, h5,
   width: 100%; }
 
 #sidebar {
+  position: fixed;
   min-width: 300px;
   max-width: 300px;
   background: #1d1919;

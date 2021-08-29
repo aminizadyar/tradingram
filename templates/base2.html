@@ -63,6 +63,13 @@
 
 }
 
+.invisible_behind_sidebar {
+    max-width: 300px;
+    min-width: 300px;
+    height: 100%;
+    width: 100%;
+}
+
     </style>
 
     {% block extra_head %}
@@ -73,6 +80,11 @@
   <body>
 
 		<div class="wrapper d-flex align-items-stretch">
+
+            <div class="slides-invisible">
+            <img class="invisible_behind_sidebar" src="/static/base/images/invisible.png" alt="">
+                </div>
+
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
 		  		<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/static/base/images/logo.jpg);"></a>
@@ -135,7 +147,7 @@
 
 	        </ul>
 
-	        <div class="footer" style="position: fixed;bottom: 0;">
+	        <div class="footer" style="position: relative;bottom: 25px;">
 	        	<p>
 						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> - Tradingram
 						  </p>
