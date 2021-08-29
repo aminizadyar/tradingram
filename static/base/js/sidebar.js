@@ -15,11 +15,21 @@
 	$('#sidebarCollapse').on('click', function () {
 		$('#sidebar').toggleClass('active');
 
-		if($('.invisible_behind_sidebar').css('display') == "none"){ // or this.value == 'volvo'
+		if($('.invisible_behind_sidebar').css('display') == "none"){
       		$('.invisible_behind_sidebar').css('display','block');
+      		$('.navbar').css('width',"");
+			$('.navbar').css('right',"20px");
+			$('.navbar').css('left',"320px");
 			}
       	else {
+
 		$('.invisible_behind_sidebar').css('display','none');
+
+      		$('.navbar').css('width',"97%");
+			$('.navbar').css('right',"20px");
+			$('.navbar').css('left',"20px");
+
+
 			}
 
 		if($('.searchbar_base').css('margin-inline-start') == "250px"){ // or this.value == 'volvo'

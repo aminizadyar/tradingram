@@ -3426,7 +3426,11 @@ input[type="button"].btn-block {
   display: block; }
 
 .navbar {
-  position: relative;
+  position: fixed;
+  width: "";
+  top: 20px;
+  left: 320px;
+  right: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8271,6 +8275,7 @@ a[data-toggle="collapse"] {
     display: none; } }
 
 #content {
+  top : 1000px;
   width: 100%;
   padding: 0;
   min-height: 100vh;
