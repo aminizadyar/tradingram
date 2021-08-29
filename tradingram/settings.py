@@ -142,3 +142,6 @@ Q_CLUSTER = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# auto_now_add and auto_now are used in several models. they're timezone naive. all the datetime's used by now are in UTC. I disabled it to avoid the warnings.
+USE_TZ = False

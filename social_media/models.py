@@ -78,6 +78,9 @@ class Post(models.Model):
     symbol_initial_bid_price = models.FloatField(null=True, blank=True)
     symbol_initial_ask_price = models.FloatField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['-created_datetime']
+
     def number_of_likes(self):
         return self.likes.count()
 
