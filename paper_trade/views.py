@@ -44,7 +44,7 @@ def symbol_page(request, symbol):
                 open_order.stop_loss = order_open_position_form.cleaned_data['stop_loss']
                 open_order.symbol = symbol_of_interest
                 open_order.user = request.user
-                open_order.signal = order_open_position_form.cleaned_data['signal_text']
+                open_order.signal_text = order_open_position_form.cleaned_data['signal_text']
                 open_order.save()
                 state_open_order_status = open_order_match_engine(open_order)
             order_close_position_form = OrderClosePositionForm(prefix='close_order')
