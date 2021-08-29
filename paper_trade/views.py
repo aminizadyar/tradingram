@@ -52,13 +52,16 @@ def symbol_page(request, symbol):
         elif 'close_order' in request.POST:
             order_close_position_form = OrderClosePositionForm(request.POST, prefix='close_order')
             if order_close_position_form.is_valid():
-                close_order = OrderClosePosition()
-                close_order.input_price = order_close_position_form.cleaned_data['input_price']
-                close_order.quantity = order_close_position_form.cleaned_data['quantity']
-                close_order.related_open_order = OrderOpenPosition.objects.get(
-                    id=order_close_position_form.cleaned_data['open_position_id'])
-                close_order.save()
-                state_close_order_status = close_order_match_engine(close_order)
+                if OrderOpenPosition.objects.get(id=order_close_position_form.cleaned_data['open_position_id']).user == request.user:
+                    close_order = OrderClosePosition()
+                    close_order.input_price = order_close_position_form.cleaned_data['input_price']
+                    close_order.quantity = order_close_position_form.cleaned_data['quantity']
+                    close_order.related_open_order = OrderOpenPosition.objects.get(
+                        id=order_close_position_form.cleaned_data['open_position_id'])
+                    close_order.save()
+                    state_close_order_status = close_order_match_engine(close_order)
+                else:
+                    state_close_order_status = "You can't close this trade"
             order_open_position_form = OrderOpenPositionForm(leverage_choices, prefix='open_order')
             post_form = PostForm(prefix='post')
 
