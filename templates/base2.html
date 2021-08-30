@@ -53,14 +53,13 @@
 }
 
 .searchbar_base{
-
+    position: absolute;
     margin-block-start: 1em;
     margin-block-end: 1em;
-    margin-inline-start: 110px;
+    margin-inline-start: 0px ;
     margin-inline-end: 0px;
     margin-top: 10px;
-
-
+    right: 35%;
 }
 
 .invisible_behind_sidebar {
@@ -185,7 +184,7 @@
             <p class="equity">  Equity: {{ user.profile.equity|floatformat:3 }}</p>
             <form class="form-inline searchbar_base">
                     <input class="form-control mr-sm-2" type="search" placeholder="Traders or Tickers" aria-label="Search">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
 
               <ul class="nav navbar-nav ml-auto">
