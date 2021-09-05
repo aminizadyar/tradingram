@@ -8,12 +8,19 @@
 
 
 
+{%block extra_head%}
+
+<link rel="stylesheet" href="/static/paper_trade/ticker_page_style.css">
+
+{% endblock%}
+
+
 {% block content %}
     <div>
 
 
 
-        <p> Name : {{ ticker.name }}</p>
+        <p  id = "one"> Name : {{ ticker.name }}</p>
         <br>
         <p> Symbol : {{ ticker.symbol }} </p>
         <br>
