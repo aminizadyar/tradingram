@@ -100,6 +100,9 @@ def feed_page(request):
             post_obj = Post()
             post_obj.user = request.user
             post_obj.text_content = post_form.cleaned_data['text_content']
+            
+            # post_obj.text_content = request.POST.get("text_content")
+            
             post_obj.save()
             messages.success(request, ('Your post was successfully published!'))
             return redirect('feed_page')

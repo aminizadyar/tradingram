@@ -1,18 +1,51 @@
 {% extends 'base2.html' %}
+
+
+
+
+{%block extra_head%}
+
+<link rel="stylesheet" href="/static/paper_trade/feed_page_style.css">
+<script src="https://kit.fontawesome.com/275fbb9899.js" crossorigin="anonymous"></script>
+
+
+{% endblock%}
+
+
+
+
+
 {% block content %}
 
     {% block title %}
     Feed
     {% endblock %}
 
+    
     <h2>
         What do you think about markets today? Publish it!
     </h2>
-    <form method="post"  enctype="multipart/form-data" >
-        {% csrf_token %}
+    
+    <form method="POST"  enctype="multipart/form-data" >
+        <!-- {% csrf_token %}
         {{ post_form.as_p }}
-        <button type="submit">Publish</button>
+        <button type="submit">Publish</button> -->
+        {% csrf_token %}
+
+
+        <div class="form-group">
+            <label for="comment">Your Thoughts:</label>
+            <textarea class="form-control" rows="5" name="text_content" id="comment"></textarea>
+            <button type="submit" class="btn btn-default btn-lg">Publish</button>
+
+        </div>
+
+
+
     </form>
+
+
+
     <br>
     <h1>Signals published by people you follow in the last 24 hours</h1>
     {% for signal in followings_signals %}
@@ -62,7 +95,7 @@
                 Text : {{ post.text_content }}
                 </p>
                 <p>
-                Number of Likes : {{ post.number_of_likes }}
+                Number of Likes : {{ post.number_of_likes }}<i class="fa fa-heart"  style="font-size: 25px; color: red;"></i>
                 </p>
 
                 {% if user in post.like_related_users %}
@@ -104,7 +137,7 @@
                 Text : {{ post.text_content }}
                 </p>
                 <p>
-                Number of Likes : {{ post.number_of_likes }}
+                Number of Likes : {{ post.number_of_likes }}<i class="fa fa-heart"  style="font-size: 25px; color: red;"></i>
                 </p>
 
                 {% if user in post.like_related_users %}

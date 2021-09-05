@@ -1,4 +1,15 @@
 {% extends 'base2.html' %}
+{% load static %}
+
+
+{%block extra_head%}
+
+<link rel="stylesheet" href="/static/paper_trade/markets_page_style.css">
+
+{% endblock %}
+
+
+
 {% block content %}
     {% block title %}
     Markets
@@ -6,12 +17,21 @@
 <nav class="nav nav-pills nav-fill">
     <a class="nav-link active" aria-current="page" href="#">Markets Last Prices</a>
 </nav>
-<ul class="list-group">
+
+
+<!-- <ul class="list-group"> -->
+    <div class="list-group">
     {% for symbol in qs %}
-        <li class="list-group-item"><span class="badge bg-secondary"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span> <span
+        <!-- <li class="list-group-item"><span class="badge bg-secondary"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span> <span
                 class="badge bg-success">Last Price</span> <span
                 class="badge bg-info text-dark">{{ symbol.last_price }}</span></li>
+            -->
+
+                <a href="/markets/{{symbol.symbol}}" class="list-group-item list-group-item-action ">{{symbol.symbol}}&ensp;&ensp;<span class="badge badge-primary badge-pill">{{symbol.last_price}}</span> </a>
+                
+
     {% endfor %}
-</ul>
+</div>
+<!-- </ul> -->
 {% endblock %}
 
