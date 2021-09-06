@@ -15,6 +15,12 @@
     {% endif %}
     <br>
     <br>
+
+
+    <style>
+        p{font-size: large;}
+    </style>
+
     <p> Username : {{ viewed_user.username }} </p>
     <br>
     <img src="{{ viewed_user.profile.profile_picture.url}}" alt="Profile Picture" style="width:200px;height:200px;">
@@ -37,8 +43,17 @@
     </h2>
     <form method="post"  enctype="multipart/form-data" >
         {% csrf_token %}
-        {{ post_form.as_p }}
-        <button type="submit">Publish</button>
+        <!-- {{ post_form.as_p }} -->
+
+
+        <div class="form-group">
+            <label for="comment">Your Thoughts:</label>
+            <textarea class="form-control" rows="5" name="text_content" id="comment"></textarea>
+            <button type="submit" class="btn btn-default btn-lg">Publish</button>
+
+        </div>
+
+        <!-- <button type="submit">Publish</button> -->
     </form>
     <br>
 

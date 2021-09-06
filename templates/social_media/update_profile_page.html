@@ -6,8 +6,55 @@
 
     <form method="post"  enctype="multipart/form-data" >
         {% csrf_token %}
-        {{ user_form.as_p }}
+        <!-- {{ user_form.as_p }} -->
+
+
+        <div class="form-group">
+            <label for="pwd">First Name:</label>
+            <input type="number" class="form-control" id="pwd" placeholder="Enter your first name" name="pwd">
+          </div>
+    
+    
+    
+          
+          <div class="form-group">
+            <label for="pwd">Last Name:</label>
+            <input type="number" class="form-control" id="pwd" placeholder="Enter your last name" name="pwd">
+          </div>
+    
+    
+    
+    
+        <div class="form-group">
+            <label for="comment">Bio:</label>
+            <textarea class="form-control" rows="5" id="comment"></textarea>
+        </div>
+    
+    
+    
+        <div class="form-group">
+            <label for="pwd">Location:</label>
+            <input type="number" class="form-control" id="pwd" placeholder="Enter your location" name="pwd">
+          </div>
+    
+    
+    
+          <div class="form-group">
+            <label for="pwd">Birth Date:</label>
+            <input type="number" class="form-control" id="pwd" placeholder="Your birth date" name="pwd">
+          </div>
+    
+
+
         {{ profile_form.as_p }}
+
+
+
+
+
+
+
+        
         <button type="submit">Save changes</button>
     </form>
 
