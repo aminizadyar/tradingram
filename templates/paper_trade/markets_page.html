@@ -15,23 +15,52 @@
     Markets
 {% endblock %}
 <nav class="nav nav-pills nav-fill">
-    <a class="nav-link active" aria-current="page" href="#">Markets Last Prices</a>
+    <a  style="font-size: large;" class="nav-link active" aria-current="page" href="#">FOREX</a>
 </nav>
-
-
-<!-- <ul class="list-group"> -->
     <div class="list-group">
     {% for symbol in qs %}
-        <!-- <li class="list-group-item"><span class="badge bg-secondary"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span> <span
-                class="badge bg-success">Last Price</span> <span
-                class="badge bg-info text-dark">{{ symbol.last_price }}</span></li>
-            -->
-
-                <a href="/markets/{{symbol.symbol}}" class="list-group-item list-group-item-action ">{{symbol.symbol}}&ensp;&ensp;<span class="badge badge-primary badge-pill">{{symbol.last_price}}</span> </a>
+                <a  style="font-size: large;" href="/markets/{{symbol.symbol}}" class="list-group-item list-group-item-action ">{{symbol.symbol}}&ensp;&ensp;<span style="font-size: large;" class="badge badge-primary badge-pill">{{symbol.last_price}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{{symbol.bid}}</span> </a>
                 
 
     {% endfor %}
-</div>
-<!-- </ul> -->
+      </div>
+
+        <br>
+        <br>
+
+
+      <nav class="nav nav-pills nav-fill">
+        <a  style="font-size: large;" class="nav-link active" aria-current="page" href="#">Crypto Currencies</a>
+    </nav>
+        <div class="list-group">
+        {% for symbol in qs %}
+                    <a style="font-size: large;" href="/markets/{{symbol.symbol}}" class="list-group-item list-group-item-action ">{{symbol.symbol}}&ensp;&ensp;<span style="font-size: large;" class="badge badge-primary badge-pill">{{symbol.last_price}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{{symbol.bid}}</span> </a>
+                    
+    
+        {% endfor %}
+          </div>
+
+
+
+
+
+        <br>
+        <br>
+
+
+      <nav class="nav nav-pills nav-fill">
+        <a style="font-size: large;" class="nav-link active" aria-current="page" href="#">Stock</a>
+    </nav>
+        <div class="list-group">
+        {% for symbol in qs %}
+                    <a style="font-size: large;" href="/markets/{{symbol.symbol}}" class="list-group-item list-group-item-action ">{{symbol.symbol}}&ensp;&ensp;<span style="font-size: large;" class="badge badge-primary badge-pill">{{symbol.bid}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{{symbol.ask}}</span> </a>
+                    
+    
+        {% endfor %}
+          </div>
+
+
+
+
 {% endblock %}
 
