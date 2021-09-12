@@ -1,0 +1,14 @@
+{% extends 'base2.html' %}
+{% block content %}
+
+    {% block title %}
+    Sectors
+    {% endblock %}
+
+<form method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' value='submit'>
+</form>
+
+{% endblock %}
