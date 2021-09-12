@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'social_media',
     'crispy_forms',
     'crispy_bootstrap5',
+    'algo_trade',
 ]
 
 MIDDLEWARE = [

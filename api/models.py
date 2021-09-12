@@ -16,6 +16,8 @@ class Symbol(models.Model):
     tick_size_of_price = models.IntegerField(default=5)
     minimum_quantity_decimal_point = models.IntegerField(default=5)
     description = models.TextField(null=True,blank=True)
+    profile_picture = models.ImageField(null=False, upload_to='symbol-logo/',
+                                        default='symbol_logo/default.png')
     # fields below are only useful for forex pairs
     pip = models.IntegerField(default=10000)
 
