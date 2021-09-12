@@ -1,8 +1,9 @@
 {% extends 'base2.html' %}
-{% block content %}
-    {% block title %}
+{% block title %}
     Update Your Profile
 {% endblock %}
+
+{% block content %}
 
     <form method="post"  enctype="multipart/form-data" >
         {% csrf_token %}

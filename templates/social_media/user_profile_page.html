@@ -1,9 +1,10 @@
 {% extends 'base2.html' %}
-{% block content %}
-    {% block title %}
+
+ {% block title %}
     {{ viewed_user.username }}'s Profile
 {% endblock %}
 
+{% block content %}
     {% if viewed_user == viewing_user %}
         <a href={% url 'update_profile_page' %}>Update Your Profile</a>
     {% else %}
