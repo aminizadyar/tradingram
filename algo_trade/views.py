@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from landing_page.views import LOGIN_URL
 from algo_trade.ETF_intelligent_portfolio import temp
-from .forms import SectorForm
+from .forms import SectorForm, ETFForm
 from api.models import ETF
 
 @login_required(login_url=LOGIN_URL)
@@ -20,7 +20,7 @@ def sector_page(request):
             request.session['sectors'] = sectors
             return redirect('etf_selection_page')
     else:
-        form = SectorForm ()
+        form = SectorForm()
     context = {'form': form}
     return render(request, 'algo_trade/sector_page.html', context)
 
