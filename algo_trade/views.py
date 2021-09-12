@@ -3,7 +3,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from landing_page.views import LOGIN_URL
 from algo_trade.ETF_intelligent_portfolio import temp
-from .forms import SectorForm
+from .forms import SectorForm, ETFForm
+from api.models import ETF
 
 @login_required(login_url=LOGIN_URL)
 def algorithmic_trading_page(request):
@@ -26,8 +27,22 @@ def sector_page(request):
 @login_required(login_url=LOGIN_URL)
 def etf_selection_page(request):
     sectors = request.session.get('sectors')
-    context = {'sectors':sectors}
+    list_of_etfs = ETF.objects.filter(sector__in=sectors)
+    if request.method == 'POST':
+            etfs = request.POST.getlist('etfs')
+            request.session['etfs'] = etfs
+            return redirect('etf_input_page')
+    context = {'etfs': list_of_etfs,
+               'sectors': sectors,
+               }
+
     return render(request, 'algo_trade/etf_selection_page.html', context)
+
+@login_required(login_url=LOGIN_URL)
+def etf_input_page(request):
+    etfs = request.session.get('etfs')
+    context = {'etfs':etfs}
+    return render(request, 'algo_trade/etf_input_page.html', context)
 
 @login_required(login_url=LOGIN_URL)
 def etf_result_page(request):

@@ -5,6 +5,21 @@
     Sectors
     {% endblock %}
 
-{{ sectors }}
+<form method='post'>
+    {% csrf_token %}
+    {% for sector in sectors %}
+        <h2>{{ sector }}</h2>
+    {% for etf in etfs %}
+        {% if etf.sector == sector %}
+    <div class="checkbox">
+  <label>
+      <input type="checkbox" name="etfs" value={{ etf.symbol }}> {{ etf.name }} -- ({{ etf.symbol }})
+  </label>
+    </div>
+        {% endif %}
+     {% endfor %}
+    {% endfor %}
+    <input type='submit' value='submit'>
+</form>
 
 {% endblock %}
