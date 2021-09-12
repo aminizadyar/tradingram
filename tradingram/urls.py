@@ -20,6 +20,7 @@ from paper_trade.urls import urlpatterns as paper_trade_urlpatterns
 from landing_page.urls import urlpatterns as landing_page_urlpatterns
 from api.urls import urlpatterns as api_urlpatterns
 from social_media.urls import urlpatterns as social_media_urlpatterns
+from algo_trade.urls import urlpatterns as algo_trade_urlpatterns
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,7 +31,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-] + paper_trade_urlpatterns + landing_page_urlpatterns + api_urlpatterns + social_media_urlpatterns
+] + paper_trade_urlpatterns + landing_page_urlpatterns + api_urlpatterns + social_media_urlpatterns + algo_trade_urlpatterns
 
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
