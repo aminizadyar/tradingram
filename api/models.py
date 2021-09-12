@@ -16,7 +16,7 @@ class Symbol(models.Model):
     tick_size_of_price = models.IntegerField(default=5)
     minimum_quantity_decimal_point = models.IntegerField(default=5)
     description = models.TextField(null=True,blank=True)
-    profile_picture = models.ImageField(null=False, upload_to='symbol-logo/',
+    logo = models.ImageField(null=False, upload_to='symbol-logo/',
                                         default='symbol_logo/default.png')
     # fields below are only useful for forex pairs
     pip = models.IntegerField(default=10000)
@@ -47,3 +47,18 @@ class Symbol(models.Model):
             return (100000 * Symbol.objects.get(symbol=usd_indexed).last_price) / (self.pip * self.last_price)
         else:
             return 100000 / (self.pip * Symbol.objects.get(symbol=symbol_indexed).last_price * self.last_price)
+
+class ETF(models.Model):
+    SECTOR_CHOICES = (
+        ('TG', 'Thematic Growth'),
+        ('IN', 'Income'),
+        ('IA', 'International Access'),
+        ('CM', 'Commodities'),
+        ('OS', 'Other Strategies'),
+        )
+    name = models.CharField(max_length=60)
+    symbol = models.CharField(max_length=50, unique=True)
+    sector = models.CharField(max_length=2,choices=SECTOR_CHOICES,default='TG')
+
+    def __str__(self):
+        return self.symbol
