@@ -3426,6 +3426,7 @@ input[type="button"].btn-block {
   display: block; }
 
 .navbar {
+  z-index: 20;
   position: fixed;
   width: "";
   top: 20px;
