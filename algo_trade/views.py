@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from landing_page.views import LOGIN_URL
 from algo_trade.ETF_intelligent_portfolio import temp
-from .forms import SectorForm, ETFForm
+from .forms import SectorForm
 from api.models import ETF
 
 @login_required(login_url=LOGIN_URL)
