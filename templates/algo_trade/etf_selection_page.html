@@ -8,7 +8,24 @@
 <form method='post'>
     {% csrf_token %}
     {% for sector in sectors %}
-        <h2>{{ sector }}</h2>
+        {% if sector == 'TG' %}
+            <h2>Thematic Growth</h2>
+        {% endif %}
+        {% if sector == 'IN' %}
+            <h2>Income</h2>
+        {% endif %}
+        {% if sector == 'IA' %}
+            <h2>International Access</h2>
+        {% endif %}
+        {% if sector == 'CM' %}
+            <h2>Commodities</h2>
+        {% endif %}
+        {% if sector == 'OS' %}
+            <h2>Other Strategies</h2>
+        {% endif %}
+
+
+
     {% for etf in etfs %}
         {% if etf.sector == sector %}
     <div class="checkbox">
