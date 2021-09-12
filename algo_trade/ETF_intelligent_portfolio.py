@@ -205,11 +205,12 @@ def temp(etf_list,start_date,end_date):
 
     plt.figure(figsize=(15, 8))  # end-1 : uu[0] =1     end : uu[1]
     for j in range(0, len(ETF_list)):
-        plt.plot(range(end, end + N), nrmz(p_new[j][end:end + N]))  # lw = j/2
+        plt.plot(range(end, end + N), nrmz(p_new[j][end:end + N]), label=ETF_list[j])  # lw = j/2
 
     plt.plot(range(end, end + N), nrmz(uu[best_choice][1:N + 1]), ls=":")
     plt.grid(ls="dashed")
     plt.title(f"Optimum Values:   n = {choices[best_choice][0]}  and  beta = {choices[best_choice][1]} ")
+    plt.legend(loc="upper left")
     fig = plt.gcf()
     # convert graph into dtring buffer and then we convert 64 bit code into image
     buf = io.BytesIO()
