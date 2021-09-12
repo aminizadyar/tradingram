@@ -50,15 +50,15 @@ class Symbol(models.Model):
 
 class ETF(models.Model):
     SECTOR_CHOICES = (
-        ('TG', 'Thematic Growth'),
-        ('IN', 'Income'),
-        ('IA', 'International Access'),
-        ('CM', 'Commodities'),
-        ('OS', 'Other Strategies'),
+        ('Thematic_Growth', 'Thematic Growth'),
+        ('Income', 'Income'),
+        ('International_Access', 'International Access'),
+        ('Commodities', 'Commodities'),
+        ('Other_Strategies', 'Other Strategies'),
         )
     name = models.CharField(max_length=60)
     symbol = models.CharField(max_length=50, unique=True)
-    sector = models.CharField(max_length=2,choices=SECTOR_CHOICES,default='TG')
+    sector = models.CharField(max_length=25,choices=SECTOR_CHOICES,default='Thematic_Growth')
 
     def __str__(self):
         return self.symbol
