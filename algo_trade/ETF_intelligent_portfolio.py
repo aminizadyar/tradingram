@@ -8,7 +8,7 @@ import io
 import urllib, base64
 
 
-def temp():
+def temp(etf_list):
     def nrmz(a):
         return [b / a[0] for b in a]
 
@@ -89,7 +89,7 @@ def temp():
 
         return alpha
 
-    ETF_list = ["BUG", "QYLD", "LIT", "PAVE"]
+    ETF_list = etf_list
     p_new = [0] * len(ETF_list)
 
     for i in range(0, len(ETF_list)):

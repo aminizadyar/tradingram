@@ -12,7 +12,7 @@ def algorithmic_trading_page(request):
     return render(request, 'algo_trade/algorithmic_trading_page.html', context)
 
 @login_required(login_url=LOGIN_URL)
-def sector_page(request):
+def etf_input_page(request):
     if request.method == 'POST':
         form = SectorForm(request.POST)
         if form.is_valid():
@@ -22,7 +22,7 @@ def sector_page(request):
     else:
         form = SectorForm()
     context = {'form': form}
-    return render(request, 'algo_trade/sector_page.html', context)
+    return render(request, 'algo_trade/etf_input_page.html', context)
 
 @login_required(login_url=LOGIN_URL)
 def etf_selection_page(request):
@@ -31,22 +31,16 @@ def etf_selection_page(request):
     if request.method == 'POST':
             etfs = request.POST.getlist('etfs')
             request.session['etfs'] = etfs
-            return redirect('etf_input_page')
+            return redirect('etf_result_page')
     context = {'etfs': list_of_etfs,
                'sectors': sectors,
                }
-
     return render(request, 'algo_trade/etf_selection_page.html', context)
 
 @login_required(login_url=LOGIN_URL)
-def etf_input_page(request):
-    etfs = request.session.get('etfs')
-    context = {'etfs':etfs}
-    return render(request, 'algo_trade/etf_input_page.html', context)
-
-@login_required(login_url=LOGIN_URL)
 def etf_result_page(request):
-    uri = temp()
+    etfs = request.session.get('etfs')
+    uri = temp(etfs)
     context = {'data': uri}
     return render(request, 'algo_trade/etf_result_page.html', context)
 
