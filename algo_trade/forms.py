@@ -37,4 +37,5 @@ class SectorForm(forms.Form):
     risk_preference = forms.ChoiceField(choices=RISK_PREFERENCE_CHOICES)
     style = forms.ChoiceField(choices=STYLE_CHOICES)
     method = forms.ChoiceField(choices=METHOD_CHOICES)
-
+    start_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))

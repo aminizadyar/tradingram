@@ -16,8 +16,9 @@ def etf_input_page(request):
     if request.method == 'POST':
         form = SectorForm(request.POST)
         if form.is_valid():
-            sectors = form.cleaned_data.get('sectors')
-            request.session['sectors'] = sectors
+            request.session['sectors'] = form.cleaned_data.get('sectors')
+            request.session['start_date'] = str(form.cleaned_data.get('start_date'))
+            request.session['end_date'] = str(form.cleaned_data.get('end_date'))
             return redirect('etf_selection_page')
     else:
         form = SectorForm()
@@ -40,7 +41,9 @@ def etf_selection_page(request):
 @login_required(login_url=LOGIN_URL)
 def etf_result_page(request):
     etfs = request.session.get('etfs')
-    uri = temp(etfs)
+    start_date = request.session.get('start_date')
+    end_date = request.session.get('end_date')
+    uri = temp(etfs,start_date,end_date)
     context = {'data': uri}
     return render(request, 'algo_trade/etf_result_page.html', context)
 

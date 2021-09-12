@@ -8,7 +8,7 @@ import io
 import urllib, base64
 
 
-def temp(etf_list):
+def temp(etf_list,start_date,end_date):
     def nrmz(a):
         return [b / a[0] for b in a]
 
@@ -93,7 +93,7 @@ def temp(etf_list):
     p_new = [0] * len(ETF_list)
 
     for i in range(0, len(ETF_list)):
-        p_new[i] = yf.Ticker(f"{ETF_list[i]}").history(start="2021-03-01", end="2021-08-08")["Close"]
+        p_new[i] = yf.Ticker(f"{ETF_list[i]}").history(start=start_date, end=end_date)["Close"]
 
     n_of_data_gathering = [3, 4, 5, 6, 7]
     BETA = [0.002, 0.001, 0.0005, 0.0003, 0.0002, 0.00001, 0.006, 0.01, 0.02, 0.03]
