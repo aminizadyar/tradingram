@@ -13,8 +13,11 @@ from landing_page.views import LOGIN_URL
 
 @login_required(login_url=LOGIN_URL)
 def markets_page(request):
+    markets = ['FX','ST','CR','CF','IN']
     qs = Symbol.objects.all()
-    context = {'qs': qs}
+    context = {'qs': qs,
+               'markets': markets,
+               }
     return render(request, 'paper_trade/markets_page.html', context)
 
 

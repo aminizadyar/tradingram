@@ -5,15 +5,53 @@
 {% endblock %}
 
 {% block content %}
+
+
+
+{% for market in markets %}
 <nav class="nav nav-pills nav-fill">
-    <a class="nav-link active" aria-current="page" href="#">Markets Last Prices</a>
+    {% if market == 'FX' %}
+    <a class="nav-link active" aria-current="page" href="#">Forex Pairs</a>
+    {% endif %}
+
+    {% if market == 'ST' %}
+    <a class="nav-link active" aria-current="page" href="#">Stocks</a>
+    {% endif %}
+
+    {% if market == 'CR' %}
+    <a class="nav-link active" aria-current="page" href="#">Cryptocurrencies</a>
+    {% endif %}
+
+    {% if market == 'CF' %}
+    <a class="nav-link active" aria-current="page" href="#">Commodities</a>
+    {% endif %}
+
+    {% if market == 'IN' %}
+    <a class="nav-link active" aria-current="page" href="#">Indices</a>
+    {% endif %}
+
 </nav>
+<br>
 <ul class="list-group">
     {% for symbol in qs %}
-        <li class="list-group-item"><span class="badge bg-secondary"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span> <span
-                class="badge bg-success">Last Price</span> <span
-                class="badge bg-info text-dark">{{ symbol.last_price }}</span></li>
+        {% if symbol.market == market %}
+        <li class="list-group-item">
+        <img src="{{ symbol.logo.url}}" alt="Symbol Logo" style="width:30px;height:30px;">  &nbsp;
+            <span class="badge badge-dark"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span>  &nbsp;
+            <span
+                class="badge badge-primary">Ask Price</span>  &nbsp;
+            <span
+                class="badge badge-warning">{{ symbol.ask }}</span> &nbsp;
+         <span
+                class="badge badge-danger">Bid Price</span> &nbsp;
+            <span
+                class="badge badge-warning">{{ symbol.bid }}</span>
+
+        </li>
+        {% endif %}
     {% endfor %}
 </ul>
+<br>
+    {% endfor %}
 {% endblock %}
 
