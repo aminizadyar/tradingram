@@ -32,15 +32,42 @@
         <button name="open_order" type="submit">order</button>
     </form>
 
+    <br>
         <!-- Open Positions-->
         <h1>
             Your Open Positions:
         </h1>
+    <br>
 
-    {% for open_position in open_positions %}
-    {{ open_position }}
+        <table class="table">
+  <thead>
+    <tr>
+      <th style="text-align:center" scope="col">ID</th>
+      <th style="text-align:center" scope="col">Symbol</th>
+      <th style="text-align:center" scope="col">Direction</th>
+        <th style="text-align:center" scope="col">Current Quantity</th>
+        <th style="text-align:center" scope="col">Open Price</th>
+        <th style="text-align:center" scope="col">Blocked Margin</th>
+        <th style="text-align:center" scope="col">Unrealized Gain</th>
+    </tr>
+  </thead>
+  <tbody>
+   {% for open_position in open_positions %}
+    <tr>
+      <th style="text-align:center" scope="row">{{ open_position.id }}</th>
+      <td style="text-align:center" >{{ open_position.symbol }}</td>
+      <td style="text-align:center">{{ open_position.get_direction_display}}</td>
+      <td style="text-align:center">{{ open_position.current_quantity }}</td>
+      <td style="text-align:center">{{ open_position.matched_price|floatformat:3 }}</td>
+      <td style="text-align:center">{{ open_position.blocked_margin|floatformat:3 }}</td>
+      <td style="text-align:center">{{ open_position.unrealized_gain|floatformat:3 }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
         <br>
-    {% endfor %}
+
 
         <br>
         <h1>

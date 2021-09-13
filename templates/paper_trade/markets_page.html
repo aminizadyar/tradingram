@@ -37,7 +37,7 @@
         {% if symbol.market == market %}
         <li class="list-group-item">
         <img src="{{ symbol.logo.url}}" alt="Symbol Logo" style="width:30px;height:30px;">  &nbsp;
-            <span class="badge badge-dark"><a href="/markets/{{ symbol.symbol }}">{{ symbol.symbol }}</a></span>  &nbsp;
+            <span class="badge badge-dark"><a href="/markets/{{ symbol.symbol }}">{{ symbol.name|capfirst  }}</a></span>  &nbsp;
             <span
                 class="badge badge-primary">Ask Price</span>  &nbsp;
             <span
